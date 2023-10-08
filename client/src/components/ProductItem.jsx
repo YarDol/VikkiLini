@@ -5,11 +5,9 @@ import { formatAmount } from "../utility/formatAmount";
 import { mobile } from "../responsive";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { updateWishlistProducts } from "../redux/authRedux";
+import { updateWishlistProducts, addToWishlist } from "../redux/authRedux";
 import { useState } from "react";
 import Notification from "../components/Modal/Notification";
-
-
 
 const Container = styled.div`
   flex: 1;
@@ -104,13 +102,21 @@ const ProductItem = ({ item }) => {
   const wishlistId = useSelector((state) => state.wish.wishlistId);
   const isLike = currentWishlist?.includes(item._id);
 
-  const handleAdd = () => {
+  const handleAdd = async () => {
     setAdd(true);
     const updatedWishlist = [...currentWishlist, item._id];
     const newWishlist = { wishlist: updatedWishlist };
-    updateWishlistProducts(wishlistId, newWishlist, dispatch);
+
+    dispatch(
+      addToWishlist({
+        _id: wishlistId, 
+        wishlist: updatedWishlist,
+      })
+    );
+
+    await updateWishlistProducts(wishlistId, newWishlist, dispatch);
   };
-  const handleRemove = () => {
+  const handleRemove = async () => {
     setRemove(true);
     const productIndex = currentWishlist.indexOf(item._id);
     const updatedWishlist = [
@@ -118,7 +124,13 @@ const ProductItem = ({ item }) => {
       ...currentWishlist.slice(productIndex + 1),
     ];
     const newWishlist = { wishlist: updatedWishlist };
-    updateWishlistProducts(wishlistId, newWishlist, dispatch);
+    dispatch(
+      addToWishlist({
+        _id: wishlistId, 
+        wishlist: updatedWishlist,
+      })
+    );
+    await updateWishlistProducts(wishlistId, newWishlist, dispatch);
   };
 
   return (

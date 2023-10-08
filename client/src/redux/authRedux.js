@@ -50,14 +50,6 @@ async function updateUserInfo(id, user, dispatch) {
 }
 
 // WISHLIST
-async function getWishList(userID, dispatch) {
-  try {
-    const response = await publicRequest.get(`wishlist/${userID}`);
-    dispatch(addToWishlist(response.data));
-  } catch (error) {
-    console.error(error);
-  }
-}
 async function updateWishlistProducts(id, item, dispatch) {
   try {
     const response = await publicRequest.patch(`wishlist/${id}`, item);
@@ -90,7 +82,7 @@ export {
   signinRequest,
   signupRequest,
   updateUserInfo,
-  getWishList,
+  addToWishlist,
   updateWishlistProducts,
   getOrders,
   updateOrderStatus,

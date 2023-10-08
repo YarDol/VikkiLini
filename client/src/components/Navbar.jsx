@@ -170,46 +170,37 @@ const languages = [
               />
             </Badge>
           </MenuItem>
-          {/* {languages.map(({code}) => (
-          <MenuItem key={code} 
-          onClick={() => {
-          i18next.changeLanguage(code)  
-          }}style={{
-            opacity: currentLanguageCode === code ? 1 : 0.3,                             
-          }}
-          >EN | UA</MenuItem>
-          ))} */}
           <select
-  value={currentLanguageCode}
-  onChange={(e) => {
-    const selectedLanguageCode = e.target.value;
-    i18next.changeLanguage(selectedLanguageCode);
-  }}
-  style={{
-    padding: "10px",
-    background: "none",
-    border: "none", // Видалено рамку
-    color: "#fff",
-    cursor: "pointer",
-    outline: "none", // Видалити рамку (outline) при фокусі
-    fontWeight: "bold",
-    width: "60px"
-  }}
->
-  {languages.map(({ code, country_code }) => (
-    <option
-    key={code}
-      value={code}
-      style={{
-        backgroundColor: "black", // Видалено помаранчевий колір
-        color: currentLanguageCode === code ? "#808080" : "white",
-        fontSize: "17px", // Збільшити розмір тексту для конкретних елементів
-        padding: "30px", // Збільшений padding для конкретних елементів
-    }}>
-      {country_code}
-    </option>
-  ))}
-</select>
+              value={currentLanguageCode}
+              onChange={(e) => {
+                const selectedLanguageCode = e.target.value;
+                i18next.changeLanguage(selectedLanguageCode);
+              }}
+              style={{
+                padding: "10px",
+                background: "none",
+                border: "none", // Видалено рамку
+                color: "#fff",
+                cursor: "pointer",
+                outline: "none", // Видалити рамку (outline) при фокусі
+                fontWeight: "bold",
+                width: "60px"
+              }}
+            >
+            {languages.map(({ code, country_code }) => (
+              <option
+                key={code}
+                value={code}
+                style={{
+                  backgroundColor: "black", // Видалено помаранчевий колір
+                  color: currentLanguageCode === code ? "#808080" : "white",
+                  fontSize: "17px", // Збільшити розмір тексту для конкретних елементів
+                  padding: "30px", // Збільшений padding для конкретних елементів
+              }}>
+                {country_code}
+              </option>
+            ))}
+          </select>
           {user !== null ? (
             <MenuItem>
               <UserModal />

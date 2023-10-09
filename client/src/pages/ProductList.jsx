@@ -67,7 +67,7 @@ const ProductList = () => {
   const path = location.pathname.split("/")[2];
   const [filters, setFilters] = useState({});
   const [sort, setSort] = useState("oldest");
-  const {t} = useTranslation();
+  const { t } = useTranslation();
 
   const handleFilters = (e) => {
     const value = e.target.value;
@@ -75,10 +75,10 @@ const ProductList = () => {
       ...filters,
       [e.target.name]: value,
     });
- 
   };
+
   const reset = (e) => {
-    setSort();
+    setSort("oldest"); // Скидання сортування
     setFilters({});
   };
 
@@ -87,40 +87,25 @@ const ProductList = () => {
       <Promotion />
       <Navbar />
       <Wrapper>
-        {path !== "instock" ? (
-          <Title>{path.toUpperCase()} </Title>
-        ) : (
-          <Title>{t('alp')}</Title>
-        )}
+        <Title>{path.toUpperCase()} </Title>
         <FilterContainer>
           <Filter>
-            <FilterText>{t('filter')}</FilterText>
-            <Select
-              name="category"
-              onChange={handleFilters}
-            >
-              <Option value="men">{t('men')}</Option>
-              <Option value="women">{t('women')}</Option>
-            </Select>
-            <Select
-              name="brand"
-              onChange={handleFilters}
-            >
+            <FilterText>{t("filter")}</FilterText>
+            <Select name="brand" onChange={handleFilters}>
+              <Option value="">{t("all")}</Option>
               <Option value="vikkilini">VikkiLini</Option>
               <Option value="vovk">Vovk</Option>
               <Option value="bevza">BEVZA</Option>
-              <Option value="ienki">IENKI</Option> 
-              <Option value="mida">Mida</Option> 
+              <Option value="ienki">IENKI</Option>
+              <Option value="mida">Mida</Option>
             </Select>
             <Select name="sort" onChange={(e) => setSort(e.target.value)}>
-              <Option value="oldest">{t('old')}</Option>
-              <Option value="newest">{t('new')}</Option>
-              {/* <Option value="ascending">{t('asc')}</Option>
-              <Option value="descending">{t('dsc')}</Option> */}
-              <Option value="lowest">{t('htl')}</Option>
-              <Option value="highest">{t('lth')}</Option>
+              <Option value="oldest">{t("old")}</Option>
+              <Option value="newest">{t("new")}</Option>
+              <Option value="lowest">{t("htl")}</Option>
+              <Option value="highest">{t("lth")}</Option>
             </Select>
-            <Button onClick={reset}>{t('clf')}</Button>
+            <Button onClick={reset}>{t("clf")}</Button>
           </Filter>
         </FilterContainer>
         <AllProducts path={path} filters={filters} sort={sort} />
@@ -128,7 +113,7 @@ const ProductList = () => {
       <Newsletter />
       <Footer />
     </Container>
-  ); 
+  );
 };
 
 export default ProductList;

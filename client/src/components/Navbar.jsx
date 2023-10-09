@@ -142,7 +142,8 @@ const languages = [
                 key={index}
                 onClick={() => {
                   navigate(`${menu.path}`);
-                }}>  
+                }}
+                >  
                 {menu.title}
               </MenuLinks>
               

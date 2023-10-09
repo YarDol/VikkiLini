@@ -96,7 +96,7 @@
     "cvc": "as your card number with any CVC and future date",
     "hot": "HOTTEST CLOTHES RIGHT NOW",
     "indi": "Individual Order",
-    "text": "Hi! We are a young team that created and promotes our own clothing brand (VikkiLini). We are very happy to see you on our page. We offer a large range of stylish clothes, own production, as well as a lot of brands-partners. Also, you can contact us to create your own - a unique design or custom size. Style, beauty, power.",
+    "text": "Hi! We are a young team that created and promotes our own clothing brand (VikkiLini). Very happy to see you on our page. We offer a large range of stylish clothes, own production, as well as a lot of brands-partners. Also, you can contact us to create your own - a unique design or custom size. Style, beauty, power.",
     "caord": "Cancel Order",
     "reord": "Order Received",
     "caorde": "Ordered Clothes",
@@ -150,5 +150,6 @@
     "taken": "The username/email is already taken. Please try again.",
     "incorect": "Your username/password is incorrect. Please try again.",
     "okey": "Okey",
-    "updu": "Update Your"
+    "updu": "Update Your",
+    "all": "all"
 }

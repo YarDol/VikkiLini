@@ -37,6 +37,19 @@ const AllProducts = ({ path, filters, sort }) => {
   }, [path]);
 
   useEffect(() => {
+    const getProducts = async () => {
+      try {
+        const res = await publicRequest.get("products");
+        setProducts(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    getProducts();
+  }, []);
+
+  useEffect(() => {
     path &&
       setFilteredProducts(
         products.filter((item) =>
@@ -56,24 +69,17 @@ const AllProducts = ({ path, filters, sort }) => {
       setFilteredProducts((prev) =>
         [...prev].sort((a, b) => b._id.localeCompare(a._id))
       );
-    // } else if (sort === "ascending") {
-    //   setFilteredProducts((prev) =>
-    //     [...prev].sort((a, b) => a.name.localeCompare(b.name))
-    //   );
-    // } else if (sort === "descending") {
-    //   setFilteredProducts((prev) =>
-    //     [...prev].sort((a, b) => b.name.localeCompare(a.name))
-    //   );
-    } else if (sort === "highest") {
+    } else if (sort === "lowest") {
       setFilteredProducts((prev) =>
         [...prev].sort((a, b) => a.price - b.price)
       );
-    } else if (sort === "lowest") {
+    } else if (sort === "highest") {
       setFilteredProducts((prev) =>
         [...prev].sort((a, b) => b.price - a.price)
       );
     }
   }, [sort]);
+
   return (
     <Container>
       {filteredProducts.map((item) => (

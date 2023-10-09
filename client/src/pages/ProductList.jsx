@@ -68,12 +68,14 @@ const ProductList = () => {
   const [filters, setFilters] = useState({});
   const [sort, setSort] = useState("newest");
   const {t} = useTranslation();
+
   const handleFilters = (e) => {
     const value = e.target.value;
     setFilters({
       ...filters,
       [e.target.name]: value,
     });
+    console.log(value);
   };
   const reset = (e) => {
     setSort();
@@ -96,25 +98,19 @@ const ProductList = () => {
             <Select
               name="category"
               onChange={handleFilters}
-              disabled={path.includes("men") && false }
             >
-              <Option>{t('men')}</Option>
-              <Option>{t('women')}</Option>
+              <Option value="men">{t('men')}</Option>
+              <Option value="women">{t('women')}</Option>
             </Select>
             <Select
               name="brand"
               onChange={handleFilters}
-              disabled={
-                path.includes("men") === false && path !== "instock"
-                  ? true
-                  : false
-              }
             >
-              <Option>VikkiLini</Option>
-              <Option>Vovk</Option>
-              <Option>BEVZA</Option>
-              <Option>IENKI</Option> 
-              <Option>Mida</Option> 
+              <Option value="vikkilini">VikkiLini</Option>
+              <Option value="vovk">Vovk</Option>
+              <Option value="bevza">BEVZA</Option>
+              <Option value="ienki">IENKI</Option> 
+              <Option value="mida">Mida</Option> 
             </Select>
             <Select name="sort" onChange={(e) => setSort(e.target.value)}>
               <Option value="newest">{t('new')}</Option>

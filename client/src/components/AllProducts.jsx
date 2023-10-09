@@ -48,13 +48,13 @@ const AllProducts = ({ path, filters, sort }) => {
   }, [products, path, filters]);
 
   useEffect(() => {
-    if (sort === "oldest") {
-      setFilteredProducts((prev) =>
-        [...prev].sort((a, b) => a._id.localeCompare(b._id))
-      );
-    } else if (sort === "newest") {
+    if (sort === "newest") {
       setFilteredProducts((prev) =>
         [...prev].sort((a, b) => b._id.localeCompare(a._id))
+      );
+    } else if (sort === "oldest") {
+      setFilteredProducts((prev) =>
+        [...prev].sort((a, b) => a._id.localeCompare(b._id))
       );
     } else if (sort === "highest") {
       setFilteredProducts((prev) =>

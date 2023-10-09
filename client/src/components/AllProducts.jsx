@@ -48,26 +48,22 @@ const AllProducts = ({ path, filters, sort }) => {
   }, [products, path, filters]);
 
   useEffect(() => {
-    if (sort === "newest") {
-      setFilteredProducts((prev) =>
-        [...prev].sort((a, b) => b._id.localeCompare(a._id))
-      );
-    } else if (sort === "oldest") {
+    if (sort === "oldest") {
       setFilteredProducts((prev) =>
         [...prev].sort((a, b) => a._id.localeCompare(b._id))
       );
-    } else if (sort === "highest") {
+    } else if (sort === "newest") {
       setFilteredProducts((prev) =>
-        [...prev].sort((a, b) => a.price - b.price)
+        [...prev].sort((a, b) => b._id.localeCompare(a._id))
       );
-    } else if (sort === "ascending") {
-      setFilteredProducts((prev) =>
-        [...prev].sort((a, b) => a.name.localeCompare(b.name))
-      );
-    } else if (sort === "descending") {
-      setFilteredProducts((prev) =>
-        [...prev].sort((a, b) => b.name.localeCompare(a.name))
-      );
+    // } else if (sort === "ascending") {
+    //   setFilteredProducts((prev) =>
+    //     [...prev].sort((a, b) => a.name.localeCompare(b.name))
+    //   );
+    // } else if (sort === "descending") {
+    //   setFilteredProducts((prev) =>
+    //     [...prev].sort((a, b) => b.name.localeCompare(a.name))
+    //   );
     } else if (sort === "highest") {
       setFilteredProducts((prev) =>
         [...prev].sort((a, b) => a.price - b.price)

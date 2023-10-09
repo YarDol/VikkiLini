@@ -66,7 +66,7 @@ const ProductList = () => {
   const location = useLocation();
   const path = location.pathname.split("/")[2];
   const [filters, setFilters] = useState({});
-  const [sort, setSort] = useState("newest");
+  const [sort, setSort] = useState("oldest");
   const {t} = useTranslation();
 
   const handleFilters = (e) => {
@@ -75,7 +75,7 @@ const ProductList = () => {
       ...filters,
       [e.target.name]: value,
     });
-    console.log(value);
+ 
   };
   const reset = (e) => {
     setSort();
@@ -113,10 +113,10 @@ const ProductList = () => {
               <Option value="mida">Mida</Option> 
             </Select>
             <Select name="sort" onChange={(e) => setSort(e.target.value)}>
-              <Option value="newest">{t('new')}</Option>
               <Option value="oldest">{t('old')}</Option>
-              <Option value="ascending">{t('asc')}</Option>
-              <Option value="descending">{t('dsc')}</Option>
+              <Option value="newest">{t('new')}</Option>
+              {/* <Option value="ascending">{t('asc')}</Option>
+              <Option value="descending">{t('dsc')}</Option> */}
               <Option value="lowest">{t('htl')}</Option>
               <Option value="highest">{t('lth')}</Option>
             </Select>

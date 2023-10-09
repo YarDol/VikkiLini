@@ -194,7 +194,7 @@ import {
               <Icon>
                 <Phone />
               </Icon>{" "}
-              (066) 947 27 06
+              (068) 147 35 06
             </ContactItem>
             <ContactItem>
               <Icon>

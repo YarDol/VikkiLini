@@ -9,6 +9,11 @@ import { initReactI18next } from "react-i18next";
 import LanguageDetector from 'i18next-browser-languagedetector';
 import HttpApi from 'i18next-http-backend';
 import { createRoot } from 'react-dom/client';
+import styled from "styled-components";
+
+const Container = styled.div`
+  overflow-x: hidden;
+`;
 
 //Localisaton
 i18n
@@ -35,7 +40,9 @@ root.render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
     <Suspense fallback={<div>Loading...</div>}>
-      <App />
+      <Container>
+        <App />
+      </Container>
       </Suspense>
     </PersistGate>
   </Provider>

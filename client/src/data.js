@@ -49,7 +49,7 @@ export const sliderItems = [
     {
       id: 3,
       img: "https://i.ibb.co/NyF83yd/139965334-405221847472587-2519482359077670753-n.jpg",
-      title: "KID",
+      title: "VikkiLini",
       path: "vikkilini",
     },
     {

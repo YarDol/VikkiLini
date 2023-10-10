@@ -4,7 +4,6 @@ import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlin
 import React, { useState } from "react";
 import styled from "styled-components";
 import MobileNavbar from "./MobileNavbar";
-import { MenuList } from "./NavigationLinks";
 import { useNavigate } from "react-router-dom";
 import { mobile, tablet } from "../responsive";
 import BrandModal from "./Modal/NavbarModal";
@@ -13,6 +12,7 @@ import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import i18next from 'i18next'
 import cookies from "js-cookie"; 
+import MenuSections from "../components/Modal/MenuSections";
 
 const Container = styled.div`
   width: 100vw;
@@ -76,6 +76,7 @@ const MenuLinks = styled.h3`
   font-size: 16px;
   cursor: pointer;
   margin: 0 10px;
+  position: relative; 
   &:before {
     content: "";
     position: absolute;
@@ -88,10 +89,9 @@ const MenuLinks = styled.h3`
   }
   &:hover:before {
     width: 100%;
-    left: 0%;
+    left: 0;
     right: auto;
   }
-  ${tablet({ margin: "5px", fontSize: "16px" })}
 `;
 
 
@@ -101,6 +101,12 @@ const Navbar = () => {
   const user = useSelector((state) => state.user.currentUser);
   const bagQuantity = useSelector((state) => state.bag.quantity);
   const wish = useSelector((state) => state.wish.wishlist);
+  const [sections, setSections] = useState({ men: [], women: [], instock: [] });
+
+  const handleSectionsLoad = (sectionsData) => {
+    setSections(sectionsData);
+  };
+
   const handleHover = (e) => {
     let hovered = Number(e.target.id);
     setHover(hovered);
@@ -132,24 +138,23 @@ const languages = [
         <Left onClick={() => navigate("/")}>
           <Logo>V i k k i L i n i</Logo>
         </Left>
-        {MenuList.map((menu, index) => {
-          return (
-            <Center key={index}>
-              <MenuLinks
-                id={menu.id}
-                onMouseEnter={handleHover}
-                value={menu.title}
-                key={index}
-                onClick={() => {
-                  navigate(`${menu.path}`);
-                }}
-                >  
-                {menu.title}
-              </MenuLinks>
-              
-            </Center>
-          );
-        })}
+        <Center>
+          {sections.men.length > 0 && (
+            <MenuLinks onClick={() => navigate("/products/men")}>
+              {t('categories.men')}
+            </MenuLinks>
+          )}
+          {sections.women.length > 0 && (
+            <MenuLinks onClick={() => navigate("/products/women")}>
+              {t('categories.women')}
+            </MenuLinks>
+          )}
+          {sections.instock.length > 0 && (
+            <MenuLinks onClick={() => navigate("/products/instock")}>
+              {t('categories.brand')}
+            </MenuLinks>
+          )}
+        </Center>
         <Right>
           {user !== null && (
             <MenuItem>
@@ -217,6 +222,7 @@ const languages = [
           )}
         </Right>
         <MobileNavbar />
+        <MenuSections onSectionsLoad={handleSectionsLoad} />
       </Wrapper>
       <Modal onMouseLeave={handleMouseOut}>
         {hover === 3 && <BrandModal />}

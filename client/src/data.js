@@ -1,7 +1,7 @@
 export const sliderItems = [
     {
       id: "slider1",
-      img: "https://i.ibb.co/bdT452v/slider1.png",
+      img: "https://i.ibb.co/FwxVpWR/slider1.png",
       title: "ORIGINAL STUFF",
       desc: "CREATE YOUR OWN DESIGN",
       btn: "Contact us",

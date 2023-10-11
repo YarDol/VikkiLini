@@ -40,6 +40,7 @@ const Text = styled.span`
   margin-left: 5px;
   text-align: center;
   ${mobile({ fontSize: "0.8rem" })};
+  font-weight: 500;
 `;
 
 const Action = styled.div`
@@ -52,6 +53,7 @@ const Action = styled.div`
   &:hover {
     color: black;
   }
+  font-weight: bold;
 `;
 const IndividualContainer = styled.div`
   margin: auto;
@@ -63,6 +65,8 @@ const IndividualWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   ${mobile({ padding: "0 10px" })}
+  font-size: 1.2rem;
+  color: #333; // Колір тексту
 `;
 
 const Individual = () => {

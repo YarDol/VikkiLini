@@ -10,6 +10,7 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import HttpApi from 'i18next-http-backend';
 import { createRoot } from 'react-dom/client';
 import styled from "styled-components";
+import Spinner from "./utility/spinner";
 
 const Container = styled.div`
   overflow-x: hidden;
@@ -39,7 +40,7 @@ const root = createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<div><Spinner/></div>}>
       <Container>
         <App />
       </Container>

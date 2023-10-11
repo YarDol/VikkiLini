@@ -102,7 +102,7 @@ const Orders = () => {
           <Left>
             <Action
               onClick={() => {
-                navigate(-1);
+                navigate('/');
               }}
             >
               <ArrowRightAltIcon style={{ transform: "rotate(180deg)" }} />

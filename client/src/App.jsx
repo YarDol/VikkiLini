@@ -18,6 +18,7 @@ import {
   import Individual from "./pages/Individual";
   import { useSelector } from "react-redux";
   import ScrollToTop  from "./utility/ScrollToTop";
+  import Page404 from "./utility/404";
 
   
   const App = () => {
@@ -28,7 +29,6 @@ import {
           <Routes>
             <Route path="/" exact element={<Home />}></Route>
             <Route path="/product/:id" element={<Product />}></Route>
-            <Route path="/products/" element={<ProductList />}></Route>
             <Route path="/products/:category" element={<ProductList />}></Route>
             <Route path="/wishlist" element={<Wishlist />}></Route>
             <Route path="/bag" element={<Bag />}></Route>
@@ -57,6 +57,7 @@ import {
               path="/sign-up"
               element={user ? <Navigate to={-2} /> : <SignUp />}
             ></Route>
+            <Route path="*" element={<Page404 />}></Route>
           </Routes>
         </ScrollToTop>
       </Router>

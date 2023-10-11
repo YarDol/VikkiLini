@@ -151,5 +151,7 @@
     "incorect": "Your username/password is incorrect. Please try again.",
     "okey": "Okey",
     "updu": "Update Your",
-    "all": "all"
+    "all": "all",
+    "page404p": "Oops... Something seems to have gone wrong. This page does not exist",
+    "btm": "Back to main page"
 }

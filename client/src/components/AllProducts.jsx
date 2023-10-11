@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import ProductItem from "./ProductItem";
 import { publicRequest } from "../apiRequest";
+import { Link } from "react-router-dom"
+import { useTranslation } from "react-i18next";
 
 const Container = styled.div`
   padding: 20px 10px;
@@ -10,9 +12,19 @@ const Container = styled.div`
   justify-content: space-between;
 `;
 
+const page404Styles = {
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "100vw",
+  flexDirection: "column",
+  textAlign: "center",
+};
+
 const AllProducts = ({ path, filters, sort }) => {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
+  const {t} = useTranslation();
 
   useEffect(() => {
     const getProducts = async () => {
@@ -35,19 +47,6 @@ const AllProducts = ({ path, filters, sort }) => {
     };
     getProducts();
   }, [path]);
-
-  useEffect(() => {
-    const getProducts = async () => {
-      try {
-        const res = await publicRequest.get("products");
-        setProducts(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    getProducts();
-  }, []);
 
   useEffect(() => {
     path &&
@@ -80,11 +79,28 @@ const AllProducts = ({ path, filters, sort }) => {
     }
   }, [sort]);
 
+  function isPathValid(path) {
+    if(path === "men" || path === "women" || path === "instock"){
+      return true;
+    }else{
+      return false;
+    }
+  }
+  
+  const pathIsValid = isPathValid(path);
+
   return (
     <Container>
-      {filteredProducts.map((item) => (
+      {pathIsValid ? (
+      filteredProducts.map((item) => (
         <ProductItem item={item} key={item._id} />
-      ))}
+      ))
+    ) : (
+      <div style={page404Styles}>
+            <p>{t('page404p')}</p>
+            <Link style={{'display': 'block', 'textAlign': 'center', 'fontWeight': 'bold', 'fontSize': '24px', 'marginTop': '30px'}} to="/">{t('btm')}</Link>
+        </div>
+    )}
     </Container>
   );
 };

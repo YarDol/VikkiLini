@@ -179,7 +179,7 @@ const MobileNavbar = () => {
               navigate("/sign-in");
             }}
           >
-             SIGN IN
+             {t('signin.2')}
           </MenuItem>
         )}
       </Right>

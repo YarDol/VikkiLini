@@ -6,7 +6,6 @@ import styled from "styled-components";
 import MobileNavbar from "./MobileNavbar";
 import { useNavigate } from "react-router-dom";
 import { mobile, tablet } from "../responsive";
-import BrandModal from "./Modal/NavbarModal";
 import { UserModal } from "../components/Modal/UserModal";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
@@ -32,7 +31,6 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: space-between; 
 `;
-const Modal = styled.div``;
 const Left = styled.div` 
   flex: 1;
   display: flex;
@@ -96,7 +94,6 @@ const MenuLinks = styled.h3`
 
 
 const Navbar = () => {
-  const [hover, setHover] = useState(null);
   const navigate = useNavigate();
   const user = useSelector((state) => state.user.currentUser);
   const bagQuantity = useSelector((state) => state.bag.quantity);
@@ -106,15 +103,6 @@ const Navbar = () => {
   const handleSectionsLoad = (sectionsData) => {
     setSections(sectionsData);
   };
-
-  const handleHover = (e) => {
-    let hovered = Number(e.target.id);
-    setHover(hovered);
-  };
-  const handleMouseOut = (e) => {
-    setHover(0);
-  };
-
 
 const {t} = useTranslation();
 
@@ -224,9 +212,6 @@ const languages = [
         <MobileNavbar />
         <MenuSections onSectionsLoad={handleSectionsLoad} />
       </Wrapper>
-      <Modal onMouseLeave={handleMouseOut}>
-        {hover === 3 && <BrandModal />}
-      </Modal>
     </Container>
   );
 };

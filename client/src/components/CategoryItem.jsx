@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { mobile, tablet, bigtablet } from "../responsive";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useState } from "react";
 
 const Container = styled.div`
   flex: 1;
@@ -71,18 +72,38 @@ const Button = styled.button`
 
 const CategoryItem = ({ item, index }) => {
   const navigate = useNavigate();
-  const {t} = useTranslation();
+  const { t } = useTranslation();
+  const [showButton, setShowButton] = useState(false);
+
+  const handleMouseEnter = () => {
+    if (item.id < 4) {
+      setShowButton(true);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    setShowButton(false);
+  };
+
   return (
-    <Container key={index}>
+    <Container
+      key={index}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
       <Image src={item.img} />
       <Info>
         <Title>{item.title}</Title>
-        <Button onClick={() => navigate(`/products/${item.path}`)}>
-          {t('shnow')}
-        </Button>
+        {showButton && (
+          <Button onClick={() => navigate(`/products/${item.path}`)}>
+            {t('shnow')}
+          </Button>
+        )}
       </Info>
     </Container>
   );
 };
+
+
 
 export default CategoryItem;

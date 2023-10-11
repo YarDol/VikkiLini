@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { publicRequest } from "../../apiRequest";
 
 const MenuSections = ({ onSectionsLoad }) => {
@@ -43,11 +43,7 @@ const MenuSections = ({ onSectionsLoad }) => {
     onSectionsLoad({ men, women, instock });
   }, [men, women, instock, onSectionsLoad]);
 
-  return (
-    <div>
-      {}
-    </div>
-  );
+  return null;
 };
 
 export default MenuSections;

@@ -23,17 +23,18 @@ const Wrapper = styled.div`
 `;
 
 const Categories = () => {
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   return (
     <Container>
-      <Title>VikkiLini  {t('partner')}</Title>
+      <Title>VikkiLini {t('partner')}</Title>
       <Wrapper>
         {categories.map((item) => (
-          <CategoryItem item={item} key={item.id} />
+          <CategoryItem item={item} key={item.id} id={item.id} />
         ))}
       </Wrapper>
-    </Container> 
-  ); 
+    </Container>
+  );
 };
+
 
 export default Categories;

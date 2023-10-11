@@ -4,7 +4,7 @@ import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlin
 import React, { useState } from "react";
 import styled from "styled-components";
 import MobileNavbar from "./MobileNavbar";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { mobile, tablet } from "../responsive";
 import { UserModal } from "../components/Modal/UserModal";
 import { useSelector } from "react-redux";
@@ -31,6 +31,7 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: space-between; 
 `;
+
 const Left = styled.div` 
   flex: 1;
   display: flex;
@@ -138,8 +139,12 @@ const languages = [
             </MenuLinks>
           )}
           {sections.instock.length > 0 && (
-            <MenuLinks onClick={() => navigate("/products/instock")}>
+            <MenuLinks
+            
+            onClick={() => navigate("/products/instock")}>
+              <Link to="/brands" style={{ textDecoration: "none", color: "white" }}>
               {t('categories.brand')}
+              </Link>
             </MenuLinks>
           )}
         </Center>

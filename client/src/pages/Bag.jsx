@@ -132,7 +132,7 @@ const ProductDetails = styled.div`
 `;
 const ProductImage = styled.div`
   width: 140px;
-  height: 110px;
+  height: 170px;
   cursor: pointer;
   display: flex;
   border-radius: 10px;
@@ -376,7 +376,7 @@ const Bag = () => {
           <Left>
             <Action
               onClick={() => {
-                navigate(-1);
+                navigate('/');
               }}
             >
               <ArrowRightAltIcon style={{ transform: "rotate(180deg)" }} />

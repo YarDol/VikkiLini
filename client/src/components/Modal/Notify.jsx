@@ -1,9 +1,11 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect, useCallback, useState } from "react";
 import styled from "styled-components";
 import { mobile } from "../../responsive";
 import CloseIcon from "@mui/icons-material/Close";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { useTranslation } from "react-i18next";
+import emailjs from '@emailjs/browser';
+
 const Container = styled.div`
   width: 100%;
   height: 100%;
@@ -69,8 +71,32 @@ const Button = styled.button`
   border: none;
   background-color: white;
 `;
+const Message = styled.div`
+  margin-top: 10px;
+  font-size: 16px;
+  text-align: center;
+  color: green;
+`;
 
 const Notify = ({ showModal, setShowModal }) => {
+  const [email, setEmail] = useState("");
+  const [send, setSend] = useState(false);
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+    if (validateEmail(email)) {
+      emailjs.sendForm(process.env.REACT_APP_SERVICE_ID, process.env.REACT_APP_TEMPLATE_ID, e.target, process.env.REACT_APP_PUBLIC_KEY);
+      setSend(true);
+    } else {
+      console.log('Invalid email');
+    }
+  }
+
+  const validateEmail = (email) => {
+    const re = /\S+@\S+\.\S+/;
+    return re.test(email);
+  }
+
   const closeModal = () => {
     setShowModal(false);
     document.body.style.overflow = "auto";
@@ -101,12 +127,22 @@ const Notify = ({ showModal, setShowModal }) => {
         <Subheader>
           {t('sub')}
         </Subheader>
+        <form onSubmit={sendEmail}>
         <InputContainer>
-          <Input type="email" placeholder="Enter your email here" />
-          <Button onClick={closeModal}>
-            <ArrowForwardIcon />
+          <Input type="email" 
+          placeholder="Enter your email here"
+          name="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+           />
+          <Button >
+            <ArrowForwardIcon/>
           </Button>
         </InputContainer>
+        {send ? ( 
+          <Message>{t('success_message')}</Message>
+        ) : null}
+        </form>
       </Wrapper>
     </Container>
   );

@@ -67,15 +67,23 @@ const Button = styled.button`
   justify-content: center; /* Вирівнювання стрілки по горизонталі */
 `;
 
+const Message = styled.div`
+  margin-top: 10px;
+  font-size: 16px;
+  text-align: center;
+  color: green;
+`;
+
 const Newsletter = () => {
   const { t } = useTranslation();
   const [email, setEmail] = useState("");
+  const [send, setSend] = useState(false);
 
   const sendEmail = (e) => {
     e.preventDefault();
     if (validateEmail(email)) {
       emailjs.sendForm(process.env.REACT_APP_SERVICE_ID, process.env.REACT_APP_TEMPLATE_ID, e.target, process.env.REACT_APP_PUBLIC_KEY);
-      console.log('Email:', email);
+      setSend(true);
     } else {
       console.log('Invalid email');
     }
@@ -105,6 +113,9 @@ const Newsletter = () => {
           <ArrowForwardIcon />
         </Button>
         </InputContainer>
+        {send ? ( 
+          <Message>{t('success_message')}</Message>
+        ) : null}
       </form>
     </Container>
   );

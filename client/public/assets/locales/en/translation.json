@@ -153,5 +153,6 @@
     "updu": "Update Your",
     "all": "all",
     "page404p": "Oops... Something seems to have gone wrong. This page does not exist",
-    "btm": "Back to main page"
+    "btm": "Back to main page",
+    "success_message": "Thank you! We will contact to you as soon as possible"
 }

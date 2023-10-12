@@ -129,6 +129,11 @@ const languages = [
         </Left>
         <Center>
           {sections.men.length > 0 && (
+            <MenuLinks onClick={() => navigate("/")}>
+              {t('categories.home')}
+            </MenuLinks>
+          )}
+          {sections.men.length > 0 && (
             <MenuLinks onClick={() => navigate("/products/men")}>
               {t('categories.men')}
             </MenuLinks>

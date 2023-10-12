@@ -2,6 +2,8 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import styled from "styled-components";
 import { mobile, tablet } from "../responsive";
 import { useTranslation } from "react-i18next";
+import React, { useState } from "react";
+import emailjs from '@emailjs/browser';
 
 const Container = styled.div`
   height: 55vh;
@@ -60,22 +62,50 @@ const Button = styled.button`
   flex: 1;
   border: none;
   background-color: white;
+  display: flex;
+  align-items: center; /* Вирівнювання стрілки по вертикалі */
+  justify-content: center; /* Вирівнювання стрілки по горизонталі */
 `;
 
 const Newsletter = () => {
-  const {t} = useTranslation();
+  const { t } = useTranslation();
+  const [email, setEmail] = useState("");
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+    if (validateEmail(email)) {
+      emailjs.sendForm(process.env.REACT_APP_SERVICE_ID, process.env.REACT_APP_TEMPLATE_ID, e.target, process.env.REACT_APP_PUBLIC_KEY);
+      console.log('Email:', email);
+    } else {
+      console.log('Invalid email');
+    }
+  }
+
+  const validateEmail = (email) => {
+    const re = /\S+@\S+\.\S+/;
+    return re.test(email);
+  }
+
   return (
     <Container>
       <Title>{t('sbp')}</Title>
       <Text>
         {t('subscr')}
       </Text>
-      <InputContainer>
-        <Input type="email" placeholder="Enter your email here" />
+      <form onSubmit={sendEmail}>
+        <InputContainer>
+        <Input
+          type="email"
+          name="email"
+          placeholder="Enter your email here"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
         <Button>
           <ArrowForwardIcon />
         </Button>
-      </InputContainer>
+        </InputContainer>
+      </form>
     </Container>
   );
 };

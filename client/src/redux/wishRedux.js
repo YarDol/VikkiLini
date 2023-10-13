@@ -12,10 +12,12 @@ const wishSlice = createSlice({
       state.wishlist = [];
     },
     addToWishlist: (state, action) => {
-      state.wishlistId = action.payload._id;
-      state.wishlist = action.payload.wishlist;
+      if (action.payload && action.payload.wishlist) {
+        state.wishlist = action.payload.wishlist;
+      }
     },
     updateWishlist: (state, action) => {
+      console.log(action.payload)
       state.wishlist = action.payload.wishlist;
     },
   },

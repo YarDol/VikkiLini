@@ -155,7 +155,7 @@ const UpdateOrderModal = () => {
                     ? "Cancelled"
                     : order.status === "Shipped"
                     ? "Delivered"
-                    : null
+                    : ''
                 }
                 onChange={handleInput}
                 id="yes"

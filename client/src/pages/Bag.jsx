@@ -22,9 +22,6 @@ import {
 import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 
-const KEY =
-  "pk_test_51KzRCXKTn04jlWXKeHKcn3cOVuxGmnUHyyWMCACwSJgHuggxu0mRi3lY9kkHDRa1sOZs7ZVbSuq9jEuhC2tiUIsP000PEpAgL5";
-
 const Container = styled.div``;
 
 const Wrapper = styled.div`
@@ -521,7 +518,7 @@ const Bag = () => {
                 description={`Your total is ${formatAmount(totalAmount)}`}
                 amount={totalAmount * 100}
                 token={onToken}
-                stripeKey={KEY}
+                stripeKey={process.env.REACT_APP_KEY}
               >
                 <Button>{t('chk')}</Button>
               </StripeCheckout>

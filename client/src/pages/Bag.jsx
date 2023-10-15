@@ -311,6 +311,45 @@ const Hr = styled.hr`
   height: ${(props) => props.height};
   ${mobile({ margin: "10px 0" })}
 `;
+const DeleteConfirmationModal = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const ConfirmationBox = styled.div`
+  background: white;
+  padding: 20px;
+  border-radius: 5px;
+  text-align: center;
+  max-width: 300px;
+`;
+
+const ConfirmationText = styled.p`
+  margin-bottom: 20px;
+`;
+
+const ConfirmationButtons = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const ConfirmationButton = styled.button`
+  padding: 10px 20px;
+  background: #110f12;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 0 10px;
+`;
+
 const Bag = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -319,6 +358,8 @@ const Bag = () => {
   const [stripeToken, setStripeToken] = useState(null);
   const [copy, setCopy] = useState(false);
   const [remove, setRemove] = useState(false);
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [productToDelete, setProductToDelete] = useState(null);
   const handleQuantity = (type, product) => {
     const price = product.price;
     if (type === "Add" && product.quantity < 10) {
@@ -332,10 +373,7 @@ const Bag = () => {
     setCopy(true);
   };
   const handleRemove = (product) => {
-    setRemove(true);
-    const price = product.price;
-    const quantity = product.quantity;
-    dispatch(removeProduct({ product, price, quantity }));
+    showDeleteConfirmationModal(product);
   };
   const onToken = (token) => {
     setStripeToken(token);
@@ -357,6 +395,22 @@ const Bag = () => {
     };
     stripeToken && makeRequest();
   }, [stripeToken, navigate, bag.total, bag, dispatch]);
+  const showDeleteConfirmationModal = (product) => {
+    setProductToDelete(product);
+    setShowDeleteConfirmation(true);
+  };
+  const confirmDelete = () => {
+    // Ваш код для видалення товару
+    const price = productToDelete.price;
+    const quantity = productToDelete.quantity;
+    dispatch(removeProduct({ product: productToDelete, price, quantity }));
+    setProductToDelete(null);
+    setShowDeleteConfirmation(false);
+  };
+  const cancelDelete = () => {
+    setProductToDelete(null);
+    setShowDeleteConfirmation(false);
+  };
   const shipping = bag.total > 199 ? 0 : 10;
   const totalAmount = bag.total + shipping;
   const {t} = useTranslation();
@@ -482,7 +536,7 @@ const Bag = () => {
                 <SummaryItemPrice>
                   {bag.quantity === 0
                     ? "--"
-                    : bag.total > 499
+                    : bag.total > 199
                     ? "free"
                     : formatAmount(10)}
                 </SummaryItemPrice>
@@ -492,7 +546,7 @@ const Bag = () => {
                 <SummaryItemPrice>
                   {bag.quantity === 0
                     ? "--"
-                    : bag.total > 499
+                    : bag.total > 199
                     ? "--"
                     : formatAmount(0)}
                 </SummaryItemPrice>
@@ -501,7 +555,7 @@ const Bag = () => {
               <SummaryItem font="total">
                 <SummaryItemText>{t('total')}</SummaryItemText>
                 <SummaryItemPrice>
-                  {bag.quantity !== 0 && bag.total < 499
+                  {bag.quantity !== 0 && bag.total < 199
                     ? formatAmount(totalAmount)
                     : bag.quantity === 0
                     ? formatAmount(0)
@@ -536,6 +590,17 @@ const Bag = () => {
             </TextContainer>
           </SummaryContainer>
         </BagContainer>
+        {showDeleteConfirmation && (
+          <DeleteConfirmationModal>
+            <ConfirmationBox>
+              <ConfirmationText>{t('rmv')}</ConfirmationText>
+              <ConfirmationButtons>
+                <ConfirmationButton onClick={cancelDelete}>{t('no')}</ConfirmationButton>
+                <ConfirmationButton onClick={confirmDelete}>{t('yes')}</ConfirmationButton>
+              </ConfirmationButtons>
+            </ConfirmationBox>
+          </DeleteConfirmationModal>
+        )}
       </Wrapper>
       <Footer />
     </Container>

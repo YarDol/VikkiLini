@@ -392,7 +392,7 @@ const Order = () => {
                   <SummaryItem>
                     <SummaryItemLeft>{t('shp')}</SummaryItemLeft>
                     <SummaryItemRight>
-                      {totalAmount > 499 ? "free" : formatAmount(10)}
+                      {totalAmount > 199 ? "free" : formatAmount()}
                     </SummaryItemRight>
                   </SummaryItem>
                   <Hr height={"2px"} />

@@ -54,6 +54,9 @@ const Message = styled.p`
   width: 90%;
   text-align: center;
 `;
+const ConfirmationText = styled.p`
+  margin-bottom: 20px;
+`;
 const Agreement = styled.div`
   display: flex;
   align-items: center;
@@ -140,9 +143,9 @@ const UpdateOrderModal = () => {
         <Form onSubmit={handleUpdate}>
           <Message>
             {order.status === "To Ship"
-              ? "Are you sure you want to cancel your order? Your card will not be charge."
+              ? <ConfirmationText>{t('cancl')}</ConfirmationText>
               : order.status === "Shipped"
-              ? "Did you received your order/s properly? If you select 'yes', your card will be charge."
+              ? <ConfirmationText>{t('received')}</ConfirmationText>
               : null}
           </Message>
           <Agreement>

@@ -537,7 +537,7 @@ const Bag = () => {
                   {bag.quantity === 0
                     ? "--"
                     : bag.total > 199
-                    ? "free"
+                    ? <SummaryItemText>{t('free')}</SummaryItemText>
                     : formatAmount(10)}
                 </SummaryItemPrice>
               </SummaryItem>

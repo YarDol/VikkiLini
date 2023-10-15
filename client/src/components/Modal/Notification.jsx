@@ -1,6 +1,12 @@
 import React from "react";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
+import styled from "styled-components";
+import { useTranslation } from "react-i18next";
+
+const ConfirmationText = styled.div`
+  margin-bottom: 0.1px;
+`;
 
 const Notification = ({ open, setOpen, type }) => {
   const handleClose = (event, reason) => {
@@ -10,6 +16,7 @@ const Notification = ({ open, setOpen, type }) => {
 
     setOpen(false);
   };
+  const {t} = useTranslation();
  
   return (
     <div>
@@ -37,14 +44,14 @@ const Notification = ({ open, setOpen, type }) => {
           variant="filled"
         >
           {type === "add"
-            ? "Successfully added!"
+            ? <ConfirmationText>{t('notification.1')}</ConfirmationText>
             : type === "update"
-            ? "Successfully updated!"
+            ? <ConfirmationText>{t('notification.2')}</ConfirmationText>
             : type === "remove"
-            ? "Successfully removed!"
+            ? <ConfirmationText>{t('notification.3')}</ConfirmationText>
             : type === "remind"
-            ? "Please select size and color first."
-            : "Copied to clipboard!"}
+            ? <ConfirmationText>{t('notification.4')}</ConfirmationText>
+            : <ConfirmationText>{t('notification.5')}</ConfirmationText>}
         </MuiAlert>
       </Snackbar>
     </div>

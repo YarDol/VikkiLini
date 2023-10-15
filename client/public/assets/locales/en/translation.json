@@ -155,5 +155,15 @@
     "page404p": "Oops... Something seems to have gone wrong. This page does not exist",
     "btm": "Back to main page",
     "success_message": "Thank you! We will contact to you as soon as possible",
-    "rmv": "Are you sure you want to delete this product from bag?"
+    "rmv": "Are you sure you want to delete this product from bag?",
+    "free": "Free",
+    "cancl": "Are you sure you want to cancel your order?",
+    "received": "Did you received your order/s properly?",
+    "notification": {
+        "1": "Successfully added!",
+        "2": "Successfully updated!",
+        "3": "Successfully removed!",
+        "4": "Please select size and color first.",
+        "5": "Copied to clipboard!"
+    }
 }

@@ -273,7 +273,7 @@ const Order = () => {
               }}
             >
               <ArrowRightAltIcon style={{ transform: "rotate(180deg)" }} />
-              <Text style={{ marginLeft: "5px" }}>back</Text>
+              <Text style={{ marginLeft: "5px" }}>{t('back')}</Text>
             </Action>
           </Left>
           <Right style={{ padding: "0" }}>
@@ -392,7 +392,7 @@ const Order = () => {
                   <SummaryItem>
                     <SummaryItemLeft>{t('shp')}</SummaryItemLeft>
                     <SummaryItemRight>
-                      {totalAmount > 199 ? "free" : formatAmount()}
+                      {totalAmount > 199 ? <SummaryItemLeft>{t('free')}</SummaryItemLeft> : formatAmount()}
                     </SummaryItemRight>
                   </SummaryItem>
                   <Hr height={"2px"} />

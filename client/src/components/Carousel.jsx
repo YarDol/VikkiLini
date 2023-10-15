@@ -125,7 +125,7 @@ const Carousel = () => {
       setShowNotify(true);
       document.body.style.overflow = "hidden";
     } else {
-      navigate("/products/individual");
+      navigate("/products/instock");
     }
   };
   return (

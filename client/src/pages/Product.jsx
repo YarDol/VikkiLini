@@ -190,13 +190,12 @@ const BoxSizes = styled.div`
   height: 40px;
   border: 1px solid #110f12;
   cursor: pointer;
-  &.active {
-    color: white;
-    background-color: #110f12;
-  }
+  color: ${props => (props.active ? 'white' : 'black')};
+  background-color: ${props => (props.active ? '#110f12' : 'white')};
+  transition: all 0.3s ease;
+
   &:hover {
     color: white;
-    border-color: #110f12;
     background-color: #110f12;
   }
 `;
@@ -294,10 +293,12 @@ const Product = () => {
     setColor(selectedColor);
     setActiveColor(selectedColor);
   };
-  const handleSize = (e) => {
-    const selectedSize = e && parseInt(e.target.id, 10);
-    setActiveSize(selectedSize);
-    setSize(selectedSize);
+  const handleSize = (s) => {
+    // const selectedSize = e && parseInt(e.target.id, 10);
+    // setActiveSize(selectedSize);
+    // setSize(selectedSize);
+    setActiveSize(s);
+    setSize(s);
   };
 
   const openNotify = () => {
@@ -391,8 +392,8 @@ const Product = () => {
                   <BoxSizes
                     id={s}
                     key={s}
-                    onClick={handleSize}
-                    className={s === activeSize ? "active" : null}
+                    onClick={() => handleSize(s)}
+                    active={s === activeSize}
                   >
                     <AllSize key={s} value={s} id={s}>
                       {s}

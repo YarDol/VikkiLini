@@ -13,6 +13,7 @@ import styled from "styled-components";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ScrollToTop from "./utility/scrollToTop";
+import Page404 from "./utility/404";
 
 const MainContainer = styled.div`
   height: 100vh;
@@ -40,8 +41,10 @@ function App() {
                 <Route path="/products" element={<AllProducts />} />
                 <Route path="/product/:productId" element={<Product />} />
                 <Route path="/users" element={<AllUsers />} />
+                <Route path="*" element={<Page404 />}></Route>
               </>
             )}
+            <Route path="*" element={<Page404 />}></Route>
           </Routes>
         </ScrollToTop>
       </>

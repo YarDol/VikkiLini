@@ -1,6 +1,6 @@
 import { DataGrid } from "@mui/x-data-grid";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { formatAmount } from "../utility/formatAmount";
 import { formatDate } from "../utility/formatDate";
@@ -23,6 +23,11 @@ const OrderList = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const orders = useSelector((state) => state.order.orders);
+  const [pageSize, setPageSize] = useState(8);
+
+  const handlePageSizeChange = (newPageSize) => {
+    setPageSize(newPageSize);
+  };
 
   useEffect(() => {
     getOrders(dispatch);
@@ -64,7 +69,7 @@ const OrderList = () => {
     {
       field: "address",
       headerName: "Address",
-      width: 370,
+      width: 350,
       renderCell: (params) => {
         return (
           <ListItem
@@ -128,7 +133,8 @@ const OrderList = () => {
         rows={orders}
         disableSelectionOnClick
         columns={columns}
-        pageSize={8}
+        pageSize={pageSize}
+        onPageSizeChange={handlePageSizeChange}
         rowsPerPageOptions={[8, 16, 40]}
         getRowId={(row) => row._id}
         checkboxSelection

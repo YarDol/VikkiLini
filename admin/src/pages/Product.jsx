@@ -1,9 +1,7 @@
 import { useNavigate, useLocation } from "react-router-dom";
-import { useState, useMemo, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import styled from "styled-components";
-import { userRequest } from "../request";
 import { mobile } from "../responsive";
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
@@ -69,10 +67,6 @@ const ProductContainer = styled.div`
 const ProductDetails = styled.div`
   margin: 20px;
 `;
-const Left = styled.div`
-  flex: 1.5;
-  margin-right: 10px;
-`;
 const Right = styled.div`
   flex: 1;
   position: relative;
@@ -123,48 +117,11 @@ const Product = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const productId = location.pathname.split("/")[2];
-  const [sets,setStats] = useState([]);
   const product = useSelector((state) =>
     state.product.products.find((product) => product._id === productId)
   );
   const handleOpen = () => dispatch(openModal());
-  const MONTHS = useMemo(
-    () => [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Agu",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ],
-    []
-  );
 
-  useEffect(() => {
-    const getStats = async () => {
-      try {
-        const res = await userRequest.get("orders/income?pid=" + productId);
-        const list = res.data.sort((a, b) => {
-          return a._id - b._id;
-        });
-        list.map((item) =>
-          setStats((prev) => [
-            ...prev,
-            { name: MONTHS[item._id - 1], Sales: item.total },
-          ])
-        );
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getStats();
-  }, [productId, MONTHS]);
   return (
     <Container>
       <UpdateProductModal />
@@ -193,8 +150,6 @@ const Product = () => {
           </AddButton>
         </TextContainer>
         <Wrapper>
-          <Left>
-          </Left>
           <Right>
             <EditButton>
               <EditIcon onClick={() => handleOpen()} />
@@ -219,7 +174,7 @@ const Product = () => {
                   <ProductValue>{formatAmount(product.price)}</ProductValue>
                 </ProductInfo>
                 <ProductInfo>
-                  <ProductKey>stock/s:</ProductKey>
+                  <ProductKey>stocks:</ProductKey>
                   <ProductValue>{product.stocks}</ProductValue>
                 </ProductInfo>
               </ProductDetails>

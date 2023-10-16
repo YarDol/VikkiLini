@@ -262,7 +262,7 @@ const Order = () => {
   const item = orders.find((item) => item._id === orderID);
   const products = item.products;
   const status = item.status;
-  const handleModal = () => dispatch(openModal());
+  const handleModal = (type) => dispatch(openModal(type));
   return (
     <Container>
       <UpdateOrderModal />

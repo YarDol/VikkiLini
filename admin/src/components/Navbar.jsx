@@ -6,8 +6,12 @@ import GridViewIcon from "@mui/icons-material/GridView";
 import GroupOutlinedIcon from "@mui/icons-material/GroupOutlined";
 import AllInboxIcon from "@mui/icons-material/AllInbox";
 import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
+import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import { useNavigate, useLocation } from "react-router-dom";
 import { mobile, tablet } from "../responsive";
+import { DarkModeContext } from "../context/darkModeContext";
+import { useContext } from "react";
+
 
 const Container = styled.div`
   width: 100%;
@@ -28,6 +32,14 @@ const Wrapper = styled.div`
   justify-content: space-between;
   z-index: 5;
 `;
+
+const DarkModeButton = styled.div`
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin: 10px;
+`;
+
 const Logo = styled.h1`
   font-size: 2rem;
   font-weight: bold;
@@ -93,6 +105,7 @@ const Navbar = () => {
   const location = useLocation();
   const path = location.pathname.split("/")[1];
   const admin = useSelector((state) => state.user?.currentUser?.isAdmin);
+  const { dispatch } = useContext(DarkModeContext);
   return (
     <Container>
       <Wrapper>
@@ -136,6 +149,14 @@ const Navbar = () => {
           </Center>
         )}
         <Right>
+        <DarkModeButton>
+        <div className="item">
+            <DarkModeOutlinedIcon
+              className="icon"
+              onClick={() => dispatch({ type: "TOGGLE" })}
+            />
+          </div>
+          </DarkModeButton>
           {admin && (
             <MenuItem>
               <UserModal />

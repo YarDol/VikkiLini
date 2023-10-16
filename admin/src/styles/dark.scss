@@ -1,0 +1,28 @@
+.app.dark {
+    background-color: #111;
+    color: white;
+    
+    .text {
+        color: white;
+    }
+
+    .light .text {
+        color: black; // Колір тексту в режимі light
+      }
+      
+      .dark .text {
+        color: white; // Колір тексту в режимі dark
+      }
+      
+      .light .widget {
+        background-color: white; // Колір фону компоненту в режимі light
+      }
+      
+      .dark .widget {
+        background-color: #262626; // Колір фону компоненту в режимі dark
+      }
+
+    input{
+        background-color: transparent;
+    }
+  }

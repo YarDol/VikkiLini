@@ -2,74 +2,81 @@ import FeaturedInfo from "../components/FeaturedInfo";
 import NewMembers from "../components/NewMembers";
 import NewOrders from "../components/NewOrders";
 import styled from "styled-components";
-import { userRequest } from "../request";
-import { useEffect, useMemo, useState } from "react";
 import { mobile } from "../responsive";
+import { useContext } from "react";
+import { DarkModeContext } from "../context/darkModeContext";
 
 const Container = styled.div`
   margin: auto;
-  width: 90vw;
-  max-width: 1000px;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  margin-top: 20px;
 `;
 
 const Title = styled.h1`
-  padding-top: 55px;
-  padding-bottom: 30px;
+
   font-weight: 300;
-  ${mobile({ padding: "30px 0" })}
+  ${mobile({ padding: "10px 0" })}
 `;
 
-const Widgets = styled.div`
+const MainContent = styled.div`
   display: flex;
-  flex: 1;
+  width: 100%;
+  align-items: flex-start; /* Це допоможе New Members бути лівіше інших компонентів */
   ${mobile({ flexDirection: "column" })}
 `;
 
-const Dashboard = () => {
-  const [userStats, setUserStats] = useState([]);
+const FeaturedInfoContainer = styled.div`
+  flex: 1;
+`;
 
-  const MONTHS = useMemo(
-    () => [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Agu",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ],
-    []
-  );
-  useEffect(() => {
-    const getStats = async () => {
-      try {
-        const res = await userRequest.get("/users/stats");
-        res.data.map((item) =>
-          setUserStats((prev) => [
-            ...prev,
-            { name: MONTHS[item._id - 1], "Active User": item.total },
-          ])
-        );
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getStats();
-  }, [MONTHS]);
+const Sidebar = styled.div`
+  width: 311px;
+  ${mobile({ width: "100%" })}
+`;
+
+const Widget = styled.div`
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 10px;
+  background-color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 100%;
+`;
+
+const Dashboard = () => {
+  const { darkMode } = useContext(DarkModeContext);
   return (
-    <Container>
-      <Title>DASHBOARD</Title>
-      <FeaturedInfo />
-      <Widgets>
-        <NewMembers />
-        <NewOrders />
-      </Widgets>
-    </Container>
+    <div className={darkMode ? "app dark" : "app"}>
+        <Container>
+          <Title className="text">DASHBOARD</Title>
+          <MainContent>
+            <Sidebar>
+            <Widget className={`widget`}>
+            Switch between colour themes for more comfort
+              </Widget>
+              <Widget className={`widget`}>
+                <NewMembers/>
+              </Widget>
+            </Sidebar>
+            <FeaturedInfoContainer>
+              <Widget className={`widget`}>
+                <FeaturedInfo />
+              </Widget>
+              <Widget className={`widget`}>
+                <NewOrders />
+              </Widget>
+            </FeaturedInfoContainer>
+          </MainContent>
+        </Container>
+      </div>
   );
 };
+
 export default Dashboard;

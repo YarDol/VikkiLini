@@ -14,13 +14,18 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ScrollToTop from "./utility/scrollToTop";
 import Page404 from "./utility/404";
+import './styles/dark.scss'
+import { useContext } from "react";
+import { DarkModeContext } from "./context/darkModeContext";
 
 const MainContainer = styled.div`
   height: 100vh;
 `;
 function App() {
+  const { darkMode } = useContext(DarkModeContext);
   const admin = useSelector((state) => state.user?.currentUser?.isAdmin);
   return (
+    <div className={darkMode ? "app dark" : "app"}>
     <MainContainer>
       <Navbar />
       <>
@@ -49,6 +54,7 @@ function App() {
         </ScrollToTop>
       </>
     </MainContainer>
+    </div>
   );
 }
 

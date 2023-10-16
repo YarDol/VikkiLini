@@ -10,7 +10,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { mobile, tablet } from "../responsive";
 
 const Container = styled.div`
-  width: 100vw;
+  width: 100%;
   height: 60px;
   background-color: #110f12;
   color: white;
@@ -19,7 +19,7 @@ const Container = styled.div`
 
 const Wrapper = styled.div`
   height: 100%;
-  width: 90vw;
+  width: 100%;
   max-width: 1295px;
   margin: auto;
   padding: 15px 0;

@@ -1,7 +1,7 @@
 import { DataGrid } from "@mui/x-data-grid";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getMembers } from "../redux/authRedux";
 import { openModal } from "../redux/modalRedux";
 import styled from "styled-components";
@@ -30,12 +30,19 @@ const UserList = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const members = useSelector((state) => state.member.members);
+  const [pageSize, setPageSize] = useState(8);
+
+  const handlePageSizeChange = (newPageSize) => {
+    setPageSize(newPageSize);
+  };
+
   const fullName = (first, last) => {
     const firstName = first.charAt(0).toUpperCase() + first.slice(1);
     const lastName = last.charAt(0).toUpperCase() + last.slice(1);
     const completeName = firstName + " " + lastName;
     return completeName;
   };
+
   useEffect(() => {
     getMembers(dispatch);
   }, [dispatch]);
@@ -121,7 +128,8 @@ const UserList = () => {
         rows={members}
         disableSelectionOnClick
         columns={columns}
-        pageSize={8}
+        pageSize={pageSize}
+        onPageSizeChange={handlePageSizeChange}
         rowsPerPageOptions={[8, 16, 40]}
         getRowId={(row) => row._id}
         checkboxSelection

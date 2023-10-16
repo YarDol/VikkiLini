@@ -2,7 +2,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { formatAmount } from "../utility/formatAmount";
 import { openModal } from "../redux/modalRedux";
 import { getProducts } from "../redux/authRedux";
@@ -40,10 +40,15 @@ const ProductList = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const products = useSelector((state) => state.product.products);
+  const [pageSize, setPageSize] = useState(8);
 
   useEffect(() => {
     getProducts(dispatch);
   }, [dispatch]);
+
+  const handlePageSizeChange = (newPageSize) => {
+    setPageSize(newPageSize);
+  };
 
   const handleModal = (type) => dispatch(openModal(type));
 
@@ -153,7 +158,8 @@ const ProductList = () => {
         disableSelectionOnClick
         columns={columns}
         getRowId={(row) => row._id}
-        pageSize={8}
+        pageSize={pageSize}
+        onPageSizeChange={handlePageSizeChange}
         rowsPerPageOptions={[8, 16, 40]}
         checkboxSelection
       />

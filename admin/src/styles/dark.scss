@@ -10,19 +10,30 @@
         color: black; // Колір тексту в режимі light
       }
       
-      .dark .text {
-        color: white; // Колір тексту в режимі dark
-      }
-      
-      .light .widget {
-        background-color: white; // Колір фону компоненту в режимі light
-      }
-      
-      .dark .widget {
-        background-color: #262626; // Колір фону компоненту в режимі dark
-      }
+    .dark .text {
+    color: white; // Колір тексту в режимі dark
+    }
+    
+    .light .widget {
+    background-color: white; // Колір фону компоненту в режимі light
+    }
+    
+    .dark .widget {
+    background-color: #292929;
+    color: white; // Колір фону компоненту в режимі dark
+    }
+
+    .dark .back-button {
+    color: white;
+    }
+    
+    .button{
+        background-color: #292929;
+        color: white;
+    }
 
     input{
         background-color: transparent;
     }
+  
   }

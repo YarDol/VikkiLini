@@ -3,6 +3,10 @@ import { useNavigate } from "react-router-dom";
 import OrderList from "../components/OrderList";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import { mobile } from "../responsive";
+import { useContext } from "react";
+import { DarkModeContext } from "../context/darkModeContext";
+import '../styles/dark.scss'
+
 const Container = styled.div`
   margin: auto;
   width: 90vw;
@@ -45,15 +49,18 @@ const Text = styled.span`
 
 const AllOrders = () => {
   const navigate = useNavigate();
+  const { darkMode } = useContext(DarkModeContext);
   return (
-    <Container>
+    <div className={darkMode ? "app dark" : "app"}>
+    <Container >
       <Title>ALL ORDERS</Title>
       <TextContainer style={{ paddingTop: "20px" }}>
         <Left>
-          <Button
+          <Button 
             onClick={() => {
               navigate(-1);
             }}
+            className={`back-button`}
           >
             <ArrowRightAltIcon style={{ transform: "rotate(180deg)" }} />
             <Text>back</Text>
@@ -62,6 +69,7 @@ const AllOrders = () => {
       </TextContainer>
       <OrderList />
     </Container>
+    </div>
   );
 };
 

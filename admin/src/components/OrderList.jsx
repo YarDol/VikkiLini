@@ -6,6 +6,9 @@ import { formatAmount } from "../utility/formatAmount";
 import { formatDate } from "../utility/formatDate";
 import { getOrders } from "../redux/authRedux";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { DarkModeContext } from "../context/darkModeContext";
+import '../styles/dark.scss'
 
 const MainContainer = styled.div`
   margin: 20px auto;
@@ -22,8 +25,10 @@ const ListItem = styled.div`
 const OrderList = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { darkMode } = useContext(DarkModeContext);
   const orders = useSelector((state) => state.order.orders);
   const [pageSize, setPageSize] = useState(8);
+  const sortedOrders = [...orders].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
   const handlePageSizeChange = (newPageSize) => {
     setPageSize(newPageSize);
@@ -113,7 +118,7 @@ const OrderList = () => {
                   : params.row.status === "Shipped"
                   ? "#0275d8"
                   : params.row.status === "To Ship"
-                  ? "#110f12"
+                  ? "#cc0cbf"
                   : "#d9534f",
             }}
             onClick={() => {
@@ -128,9 +133,10 @@ const OrderList = () => {
   ];
 
   return (
-    <MainContainer>
-      <DataGrid
-        rows={orders}
+    <div className={darkMode ? "app dark" : "app"}>
+    <MainContainer className={`widget`}>
+      <DataGrid className={`widget`}
+        rows={sortedOrders}
         disableSelectionOnClick
         columns={columns}
         pageSize={pageSize}
@@ -140,6 +146,7 @@ const OrderList = () => {
         checkboxSelection
       />
     </MainContainer>
+    </div>
   );
 };
 export default OrderList;

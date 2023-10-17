@@ -7,6 +7,9 @@ import { mobile, tablet, bigtablet } from "../responsive";
 import { formatAmount } from "../utility/formatAmount";
 import { formatDate } from "../utility/formatDate";
 import UpdateOrderModal from "../components/Modal/UpdateOrderModal";
+import { useContext } from "react";
+import { DarkModeContext } from "../context/darkModeContext";
+import '../styles/dark.scss'
 
 const Container = styled.div``;
 const Wrapper = styled.div`
@@ -125,7 +128,7 @@ const ProductDetails = styled.div`
 `;
 const ProductImage = styled.div`
   width: 140px;
-  height: 110px;
+  height: 170px;
   cursor: pointer;
   display: flex;
   border-radius: 10px;
@@ -262,8 +265,10 @@ const Order = () => {
   const item = orders.find((item) => item._id === orderID);
   const products = item.products;
   const status = item.status;
+  const { darkMode } = useContext(DarkModeContext);
   const handleModal = (type) => dispatch(openModal(type));
   return (
+    <div className={darkMode ? "app dark" : "app"}>
     <Container>
       <UpdateOrderModal />
       <Wrapper>
@@ -282,7 +287,7 @@ const Order = () => {
           <ShipButton>
             {status === "To Ship" ? (
               <Action>
-                <Button onClick={() => handleModal("Ship")}>Ship Order</Button>
+                <Button className={`button`} onClick={() => handleModal("Ship")}>Ship Order</Button>
               </Action>
             ) : null}
           </ShipButton>
@@ -310,7 +315,7 @@ const Order = () => {
                   <Product>
                     <Left>
                       <Details>
-                        <ProductImage
+                        <ProductImage className={`widget`}
                           onClick={() => {
                             navigate(`/product/${i.productId._id}`);
                           }}
@@ -371,6 +376,7 @@ const Order = () => {
         </OrderContainer>
       </Wrapper>
     </Container>
+    </div>
   );
 };
 

@@ -55,7 +55,7 @@ const Dashboard = () => {
   return (
     <div className={darkMode ? "app dark" : "app"}>
         <Container>
-          <Title className="text">DASHBOARD</Title>
+          <Title>DASHBOARD</Title>
           <MainContent>
             <Sidebar>
             <Widget className={`widget`}>

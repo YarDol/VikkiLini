@@ -7,9 +7,12 @@ import styled from "styled-components";
 import { mobile } from "../../responsive";
 import Notification from "./Notification";
 import CloseIcon from "@mui/icons-material/Close";
+import { useContext } from "react";
+import { DarkModeContext } from "../../context/darkModeContext";
+import '../../styles/dark.scss'
 
 const ModalContainer = styled.div`
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   z-index: 10;
   background-color: rgba(0, 0, 0, 0.7);
@@ -102,6 +105,7 @@ const UpdateOrderModal = () => {
   const [input, setInput] = useState({});
   const [loading, setLoading] = useState(false);
   const [update, setUpdate] = useState(false);
+  const { darkMode } = useContext(DarkModeContext)
   const handleUpdate = (e) => {
     e.preventDefault();
     setUpdate(true);
@@ -128,9 +132,10 @@ const UpdateOrderModal = () => {
   };
 
   return (
+    <div className={darkMode ? "app dark" : "app"}>
     <ModalContainer display={modal.open ? "flex" : "none"}>
       <Notification open={update} setOpen={setUpdate} type="update" />
-      <FormContainer>
+      <FormContainer className={`widget`}>
         <CloseButton>
           <CloseIcon onClick={handleClose} />
         </CloseButton>
@@ -167,6 +172,7 @@ const UpdateOrderModal = () => {
         </Form>
       </FormContainer>
     </ModalContainer>
+    </div>
   );
 };
 

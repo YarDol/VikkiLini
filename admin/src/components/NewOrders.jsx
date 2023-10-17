@@ -117,7 +117,7 @@ const NewOrders = () => {
               <TableRow key={item._id}>
                 <Info>{item.name}</Info>
                 <Info>{formatDate(item.createdAt)}</Info>
-                <Info>{formatAmount(item.amount)}</Info>
+                <Info>{formatAmount(item.amount - 250)}</Info>
                 <Info>
                   <CurrentStatus type={item.status} />
                 </Info>

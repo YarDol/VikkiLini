@@ -99,7 +99,7 @@ const OrderList = () => {
               navigate("/order/" + params.row._id);
             }}
           >
-            {formatAmount(params.row.amount)}
+            {formatAmount(params.row.amount - 250)}
           </ListItem>
         );
       },

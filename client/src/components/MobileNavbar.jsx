@@ -1,6 +1,6 @@
 import CloseIcon from "@mui/icons-material/Close";
 import MenuIcon from "@mui/icons-material/Menu";
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { UserMobileModal } from "../components/Modal/UserModal";
 import { mobile, tablet } from "../responsive";
@@ -18,21 +18,24 @@ const Container = styled.div`
   ${tablet({ display: "flex" })}
   ${mobile({ display: "flex" })};
 `;
+
 const Left = styled.div`
   flex: 1;
   text-align: left;
   margin: auto;
 `;
+
 const Center = styled.div`
   flex: 1;
   text-align: center;
-  margin: auto;
 `;
+
 const Right = styled.div`
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  margin-right: 10px;
 `;
 
 const OverlayContainer = styled.div`
@@ -43,10 +46,11 @@ const OverlayContainer = styled.div`
   left: ${(prop) => prop.left};
   right: ${(prop) => prop.right};
   top: 0;
-  background-color: #ffffff;
+  background-color: rgba(0, 0, 0, 0.7);
   overflow: auto;
   transition: 0.5s;
 `;
+
 const OverlayContent = styled.div`
   position: relative;
   top: 25%;
@@ -54,25 +58,25 @@ const OverlayContent = styled.div`
   text-align: center;
   margin-top: 10px;
 `;
+
 const OverlayItem = styled.div`
-  padding: 8px;
+  padding: 10px;
   font-weight: 900;
   text-decoration: none;
-  margin: auto;
   width: 50vw;
   border-radius: 40px;
   font-size: 18px;
-  color: black;
+  color: #fff;
   cursor: pointer;
   display: block;
   transition: 0.6s;
 `;
+
 const Top = styled.div`
   position: absolute;
-  color: black;
+  color: #fff;
   top: 15vh;
   cursor: pointer;
-  margin: auto;
   text-align: center;
   width: 50vw;
 `;
@@ -81,37 +85,39 @@ const CloseLeft = styled.div`
   position: absolute;
   cursor: pointer;
   top: 9px;
-  left: 7vw;
-  color: black;
-  font-size: 60px;
-  ${mobile({ left: "25px" })}
+  left: 10px;
+  color: #fff;
+  font-size: 24px;
 `;
 
 const Logo = styled.h1`
   font-size: 2rem;
   cursor: pointer;
   font-weight: bold;
-  ${tablet({ fontSize: "28px" })}
-  ${mobile({ fontSize: "24px" })} 
 `;
+
 const MenuItem = styled.div`
-  font-size: 10px;
+  font-size: 14px;
   cursor: pointer;
-  ${tablet({ fontSize: "12px" })}
-  ${mobile({
-    paddingLeft: "0",
-    justifyContent: "center",
-    alignItems: "center",
-  })}
 `;
+
+const LanguageSelect = styled.select`
+  padding: 10px;
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  outline: none;
+  font-weight: bold;
+  width: 60px;
+`;
+
 const MobileNavbar = () => {
   const user = useSelector((state) => state.user.currentUser);
   const [openMenu, setOpenMenu] = useState(false);
   const navigate = useNavigate();
-  const handleMenu = () => {
-    setOpenMenu((prev) => !prev);
-  };
-  const {t} = useTranslation();
+  const overlayContainerRef = useRef(null);
+  const { t } = useTranslation();
 
   const languages = [
     {
@@ -123,9 +129,30 @@ const MobileNavbar = () => {
       code: 'en',
       country_code: 'EN',
       name: 'English'
-    },]
-  
-    const currentLanguageCode = cookies.get('i18next') || 'en'
+    },
+  ];
+
+  const currentLanguageCode = cookies.get('i18next') || 'en';
+
+  useEffect(() => {
+    const closeOverlayOnOutsideClick = (e) => {
+      if (overlayContainerRef.current && !overlayContainerRef.current.contains(e.target)) {
+        setOpenMenu(false);
+      }
+    };
+
+    if (openMenu) {
+      document.addEventListener("mousedown", closeOverlayOnOutsideClick);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", closeOverlayOnOutsideClick);
+    };
+  }, [openMenu]);
+
+  const handleMenu = () => {
+    setOpenMenu((prev) => !prev);
+  };
 
   return (
     <Container>
@@ -138,37 +165,28 @@ const MobileNavbar = () => {
         <Logo>VikkiLini</Logo>
       </Center>
       <Right>
-      <select
-              value={currentLanguageCode}
-              onChange={(e) => {
-                const selectedLanguageCode = e.target.value;
-                i18next.changeLanguage(selectedLanguageCode);
-              }}
+        <LanguageSelect
+          value={currentLanguageCode}
+          onChange={(e) => {
+            const selectedLanguageCode = e.target.value;
+            i18next.changeLanguage(selectedLanguageCode);
+          }}
+        >
+          {languages.map(({ code, country_code }) => (
+            <option
+              key={code}
+              value={code}
               style={{
-                padding: "10px",
-                background: "none",
-                border: "none", // Видалено рамку
-                color: "#fff",
-                cursor: "pointer",
-                outline: "none", // Видалити рамку (outline) при фокусі
-                fontWeight: "bold",
-                width: "60px"
+                backgroundColor: "black",
+                color: currentLanguageCode === code ? "#808080" : "white",
+                fontSize: "17px",
+                padding: "30px",
               }}
             >
-            {languages.map(({ code, country_code }) => (
-              <option
-                key={code}
-                value={code}
-                style={{
-                  backgroundColor: "black", // Видалено помаранчевий колір
-                  color: currentLanguageCode === code ? "#808080" : "white",
-                  fontSize: "17px", // Збільшити розмір тексту для конкретних елементів
-                  padding: "30px", // Збільшений padding для конкретних елементів
-              }}>
-                {country_code}
-              </option>
-            ))}
-      </select>
+              {country_code}
+            </option>
+          ))}
+        </LanguageSelect>
         {user !== null ? (
           <MenuItem>
             <UserMobileModal />
@@ -179,11 +197,12 @@ const MobileNavbar = () => {
               navigate("/sign-in");
             }}
           >
-             {t('signin.2')}
+            {t('signin.2')}
           </MenuItem>
         )}
       </Right>
       <OverlayContainer
+        ref={overlayContainerRef}
         left={"0"}
         right={"auto"}
         style={openMenu ? { width: "50%" } : { width: "0%" }}
@@ -201,6 +220,7 @@ const MobileNavbar = () => {
                 id={menu.id}
                 onClick={() => {
                   navigate(`${menu.path}`);
+                  setOpenMenu(false); // Close the overlay when a category is selected.
                 }}
               >
                 {menu.title}

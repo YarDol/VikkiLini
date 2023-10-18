@@ -136,7 +136,7 @@ const UpdateOrderModal = () => {
     <ModalContainer display={modal.open ? "flex" : "none"}>
       <Notification open={update} setOpen={setUpdate} type="update" />
       <FormContainer className={`widget`}>
-        <CloseButton>
+        <CloseButton className={`back-button`}>
           <CloseIcon onClick={handleClose} />
         </CloseButton>
         <Header>Update Order Status</Header>

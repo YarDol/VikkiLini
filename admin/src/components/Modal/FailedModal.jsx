@@ -1,6 +1,9 @@
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { tryAgain } from "../../redux/userRedux";
+import { useContext } from "react";
+import { DarkModeContext } from "../../context/darkModeContext";
+import '../../styles/dark.scss'
 const Container = styled.div`
   width: 100%;
   height: 100%;
@@ -44,12 +47,14 @@ const Button = styled.button`
 
 const FailedModal = ({ display }) => {
   const dispatch = useDispatch();
+  const { darkMode } = useContext(DarkModeContext);
   const closeModal = () => {
     dispatch(tryAgain());
   };
   return (
+    <div className={darkMode ? "app dark" : "app"}>
     <Container display={display}>
-      <Wrapper>
+      <Wrapper className={`widget`}>
         <Header>Unable to Sign In</Header>
 
         <Subheader>
@@ -59,6 +64,7 @@ const FailedModal = ({ display }) => {
         <Button onClick={closeModal}>Okay</Button>
       </Wrapper>
     </Container>
+    </div>
   );
 };
 

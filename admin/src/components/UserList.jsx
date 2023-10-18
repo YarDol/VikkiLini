@@ -6,6 +6,9 @@ import { getMembers } from "../redux/authRedux";
 import { openModal } from "../redux/modalRedux";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { DarkModeContext } from "../context/darkModeContext";
+import '../styles/dark.scss'
 
 const Table = styled.div`
   margin: 20px auto;
@@ -31,6 +34,7 @@ const UserList = () => {
   const navigate = useNavigate();
   const members = useSelector((state) => state.member.members);
   const [pageSize, setPageSize] = useState(8);
+  const { darkMode } = useContext(DarkModeContext);
 
   const handlePageSizeChange = (newPageSize) => {
     setPageSize(newPageSize);
@@ -123,8 +127,10 @@ const UserList = () => {
   ];
 
   return (
-    <Table>
+    <div className={darkMode ? "app dark" : "app"}>
+    <Table className={`widget`}>
       <DataGrid
+        className={`widget`}
         rows={members}
         disableSelectionOnClick
         columns={columns}
@@ -135,6 +141,7 @@ const UserList = () => {
         checkboxSelection
       />
     </Table>
+    </div>
   );
 };
 export default UserList;

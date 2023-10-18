@@ -7,12 +7,15 @@ import styled from "styled-components";
 import { mobile } from "../../responsive";
 import Notification from "./Notification";
 import CloseIcon from "@mui/icons-material/Close";
+import { useContext } from "react";
+import { DarkModeContext } from "../../context/darkModeContext";
+import '../../styles/dark.scss'
 
 const ModalContainer = styled.div`
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   z-index: 10;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: #292929;
   position: absolute;
   display: ${(props) => props.display};
   justify-content: center;
@@ -86,6 +89,7 @@ const Button = styled.button`
 const UpdateUserModal = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { darkMode } = useContext(DarkModeContext);
   const modal = useSelector((state) => state.modal);
   const currentUser = useSelector((state) => state.user.currentUser);
   const adminId = currentUser._id;
@@ -163,9 +167,10 @@ const UpdateUserModal = () => {
     }
   };
   return (
+    <div className={darkMode ? "app dark" : "app"}>
     <ModalContainer display={modal.open ? "flex" : "none"}>
       <Notification open={update} setOpen={setUpdate} type="update" />
-      <FormContainer>
+      <FormContainer className={`form`}>
         <CloseButton>
           <CloseIcon onClick={handleClose} />
         </CloseButton>
@@ -175,6 +180,7 @@ const UpdateUserModal = () => {
             <Input
               type={type()}
               name={name()}
+              className={`placeholder`}
               placeholder={placeholder()}
               onChange={handleInput}
               required
@@ -193,6 +199,7 @@ const UpdateUserModal = () => {
         </Form>
       </FormContainer>
     </ModalContainer>
+    </div>
   );
 };
 

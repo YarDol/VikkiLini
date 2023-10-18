@@ -7,6 +7,9 @@ import { useNavigate } from "react-router-dom";
 import { mobile } from "../responsive";
 import UpdateUserModal from "../components/Modal/UpdateUserModal";
 import AddIcon from "@mui/icons-material/Add";
+import { useContext } from "react";
+import { DarkModeContext } from "../context/darkModeContext";
+import '../styles/dark.scss'
 
 const Container = styled.div``;
 const MainContainer = styled.div`
@@ -102,6 +105,7 @@ const InfoText = styled.p``;
 const Account = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { darkMode } = useContext(DarkModeContext);
   const currentUser = useSelector((state) => state.user.currentUser);
   const adminId = currentUser._id;
   const admin = useSelector((state) =>
@@ -113,6 +117,7 @@ const Account = () => {
   };
 
   return (
+    <div className={darkMode ? "app dark" : "app"}>
     <Container>
       <UpdateUserModal />
       <MainContainer>
@@ -123,6 +128,7 @@ const Account = () => {
               onClick={() => {
                 navigate(-1);
               }}
+              className={`back-button`}
             >
               <ArrowRightAltIcon style={{ transform: "rotate(180deg)" }} />
               <Text>back</Text>
@@ -133,6 +139,7 @@ const Account = () => {
               onClick={() => {
                 navigate("/newadmin");
               }}
+              className={`back-button`}
             >
               <AddIcon />
               <Text>new admin</Text>
@@ -143,62 +150,63 @@ const Account = () => {
           <Header>Admin Info</Header>
           <InfoContainer>
             <Category>
-              <InfoText>First Name:</InfoText>
+              <InfoText className={`text`}>First Name:</InfoText>
             </Category>
             <Value>
               <InfoText>{capitalize(admin?.firstname)}</InfoText>
             </Value>
-            <EditButton>
+            <EditButton className={`pencil`}>
               <EditIcon onClick={() => handleModal("First Name")} />
             </EditButton>
           </InfoContainer>
           <InfoContainer>
             <Category>
-              <InfoText>Last Name:</InfoText>
+              <InfoText className={`text`}>Last Name:</InfoText>
             </Category>
             <Value>
               <InfoText>{capitalize(admin?.lastname)}</InfoText>
             </Value>
-            <EditButton>
+            <EditButton className={`pencil`}>
               <EditIcon onClick={() => handleModal("Last Name")} />
             </EditButton>
           </InfoContainer>
           <InfoContainer>
             <Category>
-              <InfoText>Username:</InfoText>
+              <InfoText className={`text`}>Username:</InfoText>
             </Category>
             <Value>
               <InfoText>{admin?.username}</InfoText>
             </Value>
-            <EditButton>
+            <EditButton className={`pencil`}>
               <EditIcon onClick={() => handleModal("Username")} />
             </EditButton>
           </InfoContainer>
           <InfoContainer>
             <Category>
-              <InfoText>Email:</InfoText>
+              <InfoText className={`text`}>Email:</InfoText>
             </Category>
             <Value>
               <InfoText>{admin?.email}</InfoText>
             </Value>
-            <EditButton>
+            <EditButton className={`pencil`}>
               <EditIcon onClick={() => handleModal("Email")} />
             </EditButton>
           </InfoContainer>
           <InfoContainer>
             <Category>
-              <InfoText>Password:</InfoText>
+              <InfoText className={`text`}>Password:</InfoText>
             </Category>
             <Value>
               <InfoText>••••••••••</InfoText>
             </Value>
-            <EditButton>
+            <EditButton className={`pencil`}>
               <EditIcon onClick={() => handleModal("Password")} />
             </EditButton>
           </InfoContainer>
         </Wrapper>
       </MainContainer>
     </Container>
+    </div>
   );
 };
 

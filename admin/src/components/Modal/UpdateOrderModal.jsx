@@ -143,7 +143,7 @@ const UpdateOrderModal = () => {
         <Form onSubmit={handleUpdate}>
           <Message>Do you want to ship this order?</Message>
           <Agreement>
-            <Label htmlFor="yes">
+            <Label className={`text`} htmlFor="yes">
               <Radio
                 type="radio"
                 name="status"
@@ -151,10 +151,11 @@ const UpdateOrderModal = () => {
                 onChange={handleInput}
                 id="yes"
                 required
+                
               />
               Yes
             </Label>
-            <Label htmlFor="no">
+            <Label className={`text`} htmlFor="no">
               <Radio
                 type="radio"
                 name="status"

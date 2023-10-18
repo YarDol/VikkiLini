@@ -6,6 +6,9 @@ import { useState } from "react";
 import { addMember } from "../redux/authRedux";
 import { useDispatch } from "react-redux";
 import { mobile } from "../responsive";
+import { useContext } from "react";
+import { DarkModeContext } from "../context/darkModeContext";
+import '../styles/dark.scss'
 const Container = styled.div`
   margin: auto;
   width: 90vw;
@@ -113,6 +116,7 @@ const Button = styled.button`
 const NewAdmin = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { darkMode } = useContext(DarkModeContext);
   const [add, setAdd] = useState(false);
   const [loading, setLoading] = useState(false);
   const [inputs, setInputs] = useState({});
@@ -145,15 +149,17 @@ const NewAdmin = () => {
     }, 2000);
   };
   return (
+    <div className={darkMode ? "app dark" : "app"}>
     <Container>
       <Notification open={add} setOpen={setAdd} type="add" />
       <Title>NEW ADMIN</Title>
       <TextContainer style={{ paddingTop: "20px" }}>
-        <BackButton>
+        <BackButton >
           <Back
             onClick={() => {
               navigate(-1);
             }}
+            className={`back-button`}
           >
             <ArrowRightAltIcon style={{ transform: "rotate(180deg)" }} />
             <Text>back</Text>
@@ -169,6 +175,7 @@ const NewAdmin = () => {
             required
             onChange={handleInput}
             minLength={2}
+            className={`placeholder`}
           />
 
           <Input
@@ -178,6 +185,7 @@ const NewAdmin = () => {
             required
             onChange={handleInput}
             minLength={2}
+            className={`placeholder`}
           />
 
           <Input
@@ -186,6 +194,7 @@ const NewAdmin = () => {
             placeholder="email"
             required
             onChange={handleInput}
+            className={`placeholder`}
           />
 
           <Input
@@ -194,6 +203,7 @@ const NewAdmin = () => {
             placeholder="username"
             onChange={handleInput}
             minLength={5}
+            className={`placeholder`}
           />
 
           <Input
@@ -202,6 +212,7 @@ const NewAdmin = () => {
             required
             onChange={(e) => setPassword(e.target.value)}
             minLength={8}
+            className={`placeholder`}
           />
 
           <Input
@@ -210,10 +221,11 @@ const NewAdmin = () => {
             required
             onChange={(e) => setConfirmPassword(e.target.value)}
             minLength={8}
+            className={`placeholder`}
           />
 
           <Category>
-            <CategoryLabel htmlFor="true">
+            <CategoryLabel className={`text`} htmlFor="true">
               <CategoryInput
                 type="checkbox"
                 name="isAdmin"
@@ -227,13 +239,14 @@ const NewAdmin = () => {
           </Category>
 
           <Action>
-            <Button type="submit" disabled={loading ? true : false}>
+            <Button className={`button`} type="submit" disabled={loading ? true : false}>
               Sign Up
             </Button>
           </Action>
         </Form>
       </Wrapper>
     </Container>
+    </div>
   );
 };
 export default NewAdmin;

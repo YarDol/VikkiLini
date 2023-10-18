@@ -94,7 +94,7 @@ const Warning = ({ display }) => {
     <div className={darkMode ? "app dark" : "app"}>
     <Container display={modal.open ? "flex" : "none"} >
       <Notification open={remove} setOpen={setRemove} type="remove" />
-      <Wrapper className={`form`}>
+      <Wrapper className={`widget`}>
         <CloseButton className={`back-button`}>
           <CloseIcon onClick={handleClose} />
         </CloseButton>

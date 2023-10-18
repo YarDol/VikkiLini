@@ -14,12 +14,15 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import app from "../../firebase";
+import { useContext } from "react";
+import { DarkModeContext } from "../../context/darkModeContext";
+import '../../styles/dark.scss'
 
 const ModalContainer = styled.div`
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   z-index: 10;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: #111;
   position: absolute;
   display: ${(props) => props.display};
   justify-content: center;
@@ -29,13 +32,16 @@ const FormContainer = styled.div`
   position: relative;
   background-color: white;
   margin: auto;
+  margin-top: 30px;
   text-align: center;
   border-radius: 20px;
   width: 100%;
-  max-width: 400px;
+  max-width: 1000px;
   overflow: hidden;
   padding: 50px 30px;
   ${mobile({ width: "80%" })};
+  grid-template-columns: repeat(2, 1fr);
+  border: ${props => props.darkMode ? '2px solid #fff' : '2px solid #000'}; /* Додайте рамку в дарк режимі */
 `;
 const Header = styled.h1`
   text-align: center;
@@ -83,20 +89,26 @@ const Action = styled.div`
   margin-top: 20px;
 `;
 const Upload = styled.div`
-  margin: 20px auto;
+  margin: 30px auto;
   width: 90%;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
 `;
 
 const FileInput = styled.input`
   flex: 2;
   padding-left: 20px;
+  padding-top: 30px;
+  display: flex;
+  align-items: center;
 `;
 const Image = styled.img`
   width: 80px;
-  flex: 1;
+  grid-row: span 3;
+  display: flex;
+  align-items: center;
 `;
 
 const Button = styled.button`
@@ -120,6 +132,7 @@ const UpdateProductModal = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { darkMode } = useContext(DarkModeContext);
   const modal = useSelector((state) => state.modal);
   const productId = location.pathname.split("/").at(-1);
   const product = useSelector((state) =>
@@ -207,64 +220,76 @@ const UpdateProductModal = () => {
   };
 
   return (
+    <div className={darkMode ? "app dark" : "app"}>
     <ModalContainer display={modal.open ? "flex" : "none"}>
       <Notification open={update} setOpen={setUpdate} type="update" />
-      <FormContainer>
-        <CloseButton>
+      <FormContainer className={`form`}>
+        <CloseButton className={`back-button`}>
           <CloseIcon onClick={handleClose} />
         </CloseButton>
         <Header>Update {product.name}</Header>
         <Form onSubmit={handleUpdate}>
           <Input
+            className={`placeholder`}
             name="name"
             type="text"
-            placeholder={product.name}
+            value={inputs.name}
+            placeholder="name"
             onChange={handleInput}
           />
           <Input
+            className={`placeholder`}
             name="brand"
+            value={inputs.brand}
             type="text"
-            placeholder={product.brand}
+            placeholder="brand"
             onChange={handleInput}
           />
           <Input
+            className={`placeholder`}
             name="price"
             type="number"
-            placeholder={product.price}
+            placeholder="price"
+            value={inputs.price}
             onChange={handleInput}
           />
           <Input
+            className={`placeholder`}
             name="color"
             type="text"
-            placeholder={product.color}
+            placeholder="color"
             onChange={handleColors}
           />
           <Input
+            className={`placeholder`}
             name="size"
             type="text"
-            placeholder={product.size}
+            placeholder="size"
             onChange={handleSizes}
           />
           <Input
+            className={`placeholder`}
             name="stocks"
             type="number"
-            placeholder={product.stocks}
+            placeholder="stocks"
             onChange={handleInput}
           />
           <Input
+            className={`placeholder`}
             name="credit"
             type="text"
-            placeholder={product.credit}
+            value={inputs.credit}
             onChange={handleInput}
           />
           <Input
+            className={`placeholder`}
             name="logo"
             type="text"
-            placeholder={product.logo}
+            value={inputs.logo}
             onChange={handleInput}
           />
-          <Category>
-            <CategoryLabel>Category:</CategoryLabel>
+          <Category >
+            <CategoryLabel className={`back-button`}>Category:</CategoryLabel>
             <CategoryInput
               type="radio"
               name="category"
@@ -272,7 +297,7 @@ const UpdateProductModal = () => {
               value="men"
               onChange={handleInput}
             />
-            <CategoryLabel htmlFor="men">Men</CategoryLabel>
+            <CategoryLabel htmlFor="men" className={`back-button`}>Men</CategoryLabel>
             <CategoryInput
               type="radio"
               name="category"
@@ -280,15 +305,7 @@ const UpdateProductModal = () => {
               value="women"
               onChange={handleInput}
             />
-            <CategoryLabel htmlFor="kid">Kid</CategoryLabel>
-            <CategoryInput
-              type="radio"
-              name="category"
-              id="kid"
-              value="kid"
-              onChange={handleInput}
-            />
-            <CategoryLabel htmlFor="kid">Kid</CategoryLabel>
+            <CategoryLabel htmlFor="women" className={`back-button`}>Women</CategoryLabel>
           </Category>
           <Upload>
             <Image src={product.img} />
@@ -307,6 +324,7 @@ const UpdateProductModal = () => {
         </Form>
       </FormContainer>
     </ModalContainer>
+    </div>
   );
 };
 

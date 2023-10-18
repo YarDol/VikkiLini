@@ -7,6 +7,9 @@ import { formatAmount } from "../utility/formatAmount";
 import { openModal } from "../redux/modalRedux";
 import { getProducts } from "../redux/authRedux";
 import styled from "styled-components";
+import { useContext } from "react";
+import { DarkModeContext } from "../context/darkModeContext";
+import '../styles/dark.scss'
 
 const Table = styled.div`
   margin: 20px auto;
@@ -41,6 +44,7 @@ const ProductList = () => {
   const navigate = useNavigate();
   const products = useSelector((state) => state.product.products);
   const [pageSize, setPageSize] = useState(8);
+  const { darkMode } = useContext(DarkModeContext);
 
   useEffect(() => {
     getProducts(dispatch);
@@ -152,8 +156,9 @@ const ProductList = () => {
     },
   ];
   return (
-    <Table>
-      <DataGrid
+    <div className={darkMode ? "app dark" : "app"}>
+    <Table className={`widget`}>
+      <DataGrid className={`widget`}
         rows={products}
         disableSelectionOnClick
         columns={columns}
@@ -164,6 +169,7 @@ const ProductList = () => {
         checkboxSelection
       />
     </Table>
+    </div>
   );
 };
 

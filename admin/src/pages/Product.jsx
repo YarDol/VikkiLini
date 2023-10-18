@@ -3,11 +3,13 @@ import { useSelector, useDispatch } from "react-redux";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import styled from "styled-components";
 import { mobile } from "../responsive";
-import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import { formatAmount } from "../utility/formatAmount";
 import { openModal } from "../redux/modalRedux";
 import UpdateProductModal from "../components/Modal/UpdateProductModal";
+import { useContext } from "react";
+import { DarkModeContext } from "../context/darkModeContext";
+import '../styles/dark.scss'
 
 const Container = styled.div``;
 const MainContainer = styled.div`
@@ -19,13 +21,6 @@ const BackButton = styled.div`
   flex: 1;
   display: flex;
   align-items: center;
-  padding: 10px 0;
-`;
-const AddButton = styled.div`
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
   padding: 10px 0;
 `;
 const Nav = styled.div`
@@ -98,8 +93,8 @@ const ProductValue = styled.span`
 const EditButton = styled.div`
   position: absolute;
   cursor: pointer;
-  top: 5%;
-  right: 5%;
+  top: -10%;
+  right: 30%;
   color: grey;
   border: none;
   padding: 5px 7px;
@@ -116,6 +111,7 @@ const Product = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
+  const { darkMode } = useContext(DarkModeContext);
   const productId = location.pathname.split("/")[2];
   const product = useSelector((state) =>
     state.product.products.find((product) => product._id === productId)
@@ -123,6 +119,7 @@ const Product = () => {
   const handleOpen = () => dispatch(openModal());
 
   return (
+    <div className={darkMode ? "app dark" : "app"}>
     <Container>
       <UpdateProductModal />
       <MainContainer>
@@ -133,25 +130,16 @@ const Product = () => {
               onClick={() => {
                 navigate(-1);
               }}
+              className={`back-button`}
             >
               <ArrowRightAltIcon style={{ transform: "rotate(180deg)" }} />
               <Text>back</Text>
             </Nav>
           </BackButton>
-          <AddButton>
-            <Nav
-              onClick={() => {
-                navigate("/newproduct");
-              }}
-            >
-              <AddIcon />
-              <Text>add product</Text>
-            </Nav>
-          </AddButton>
         </TextContainer>
         <Wrapper>
           <Right>
-            <EditButton>
+            <EditButton className={`pencil`}>
               <EditIcon onClick={() => handleOpen()} />
             </EditButton>
             <ProductContainer>
@@ -183,6 +171,7 @@ const Product = () => {
         </Wrapper>
       </MainContainer>
     </Container>
+    </div>
   );
 };
 

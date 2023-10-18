@@ -5,6 +5,9 @@ import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import AddIcon from "@mui/icons-material/Add";
 import Warning from "../components/Modal/Warning";
 import { mobile } from "../responsive";
+import { useContext } from "react";
+import { DarkModeContext } from "../context/darkModeContext";
+import '../styles/dark.scss'
 
 const Container = styled.div``;
 const MainContainer = styled.div`
@@ -55,7 +58,9 @@ const Text = styled.span`
 
 const AllProducts = () => {
   const navigate = useNavigate();
+  const { darkMode } = useContext(DarkModeContext);
   return (
+    <div className={darkMode ? "app dark" : "app"}>
     <Container>
       <Warning />
       <MainContainer>
@@ -66,6 +71,7 @@ const AllProducts = () => {
               onClick={() => {
                 navigate(-1);
               }}
+              className={`back-button`}
             >
               <ArrowRightAltIcon style={{ transform: "rotate(180deg)" }} />
               <Text>back</Text>
@@ -76,6 +82,7 @@ const AllProducts = () => {
               onClick={() => {
                 navigate("/newproduct");
               }}
+              className={`back-button`}
             >
               <AddIcon />
               <Text>add product</Text>
@@ -85,6 +92,7 @@ const AllProducts = () => {
         <ProductList />
       </MainContainer>
     </Container>
+    </div>
   );
 };
 

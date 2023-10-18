@@ -13,6 +13,9 @@ import app from "../firebase";
 import { useDispatch } from "react-redux";
 import { addProduct } from "../redux/authRedux";
 import Notification from "../components/Modal/Notification";
+import { useContext } from "react";
+import { DarkModeContext } from "../context/darkModeContext";
+import '../styles/dark.scss'
 
 const Container = styled.div`
   margin: auto;
@@ -71,9 +74,10 @@ const Form = styled.form`
 const ProductItem = styled.div`
   width: 400px;
   ${mobile({ width: "100%" })}
+  
 `;
 const Label = styled.label`
-  text-align: left;
+  text-align: center;
   margin: 10px 0;
   font-size: 14px;
 `;
@@ -131,6 +135,7 @@ const NewProduct = () => {
   const [file, setFile] = useState(null);
   const [sizes, setSizes] = useState([]);
   const [colors, setColors] = useState([]);
+  const { darkMode } = useContext(DarkModeContext);
 
   const handleInput = (e) => {
     setInputs((prev) => {
@@ -175,15 +180,17 @@ const NewProduct = () => {
     }, 2000);
   };
   return (
-    <Container>
+    <div className={darkMode ? "app dark" : "app"}>
+    <Container >
       <Notification open={add} setOpen={setAdd} type="add" />
       <Title>NEW PRODUCT</Title>
       <TextContainer style={{ paddingTop: "20px" }}>
-        <BackButton>
+        <BackButton >
           <Back
             onClick={() => {
               navigate(-1);
             }}
+            className={`back-button`}
           >
             <ArrowRightAltIcon style={{ transform: "rotate(180deg)" }} />
             <Text>back</Text>
@@ -191,8 +198,9 @@ const NewProduct = () => {
         </BackButton>
       </TextContainer>
       <Wrapper>
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit} >
           <Input
+            className={`placeholder`}
             name="name"
             type="text"
             placeholder="name"
@@ -200,6 +208,7 @@ const NewProduct = () => {
             onChange={handleInput}
           />
           <Input
+            className={`placeholder`}
             name="credit"
             type="text"
             placeholder="credit"
@@ -207,6 +216,7 @@ const NewProduct = () => {
             onChange={handleInput}
           />
           <Input
+            className={`placeholder`}
             name="brand"
             type="text"
             placeholder="brand"
@@ -214,6 +224,7 @@ const NewProduct = () => {
             onChange={handleInput}
           />
           <Input
+            className={`placeholder`}
             name="price"
             type="number"
             placeholder="price"
@@ -221,6 +232,7 @@ const NewProduct = () => {
             onChange={handleInput}
           />
           <Input
+            className={`placeholder`}
             name="color"
             type="text"
             placeholder="available color/s"
@@ -228,6 +240,7 @@ const NewProduct = () => {
             onChange={handleColors}
           />
           <Input
+            className={`placeholder`}
             name="size"
             type="text"
             placeholder="available size/s"
@@ -235,7 +248,7 @@ const NewProduct = () => {
             onChange={handleSizes}
           />
           <Category>
-            <CategoryLabel>Stocks: </CategoryLabel>
+            <CategoryLabel className={`text`}>Stocks: </CategoryLabel>
             <CategoryInput
               type="radio"
               name="stocks"
@@ -243,7 +256,7 @@ const NewProduct = () => {
               value="yes"
               onChange={handleInput}
             />
-            <CategoryLabel htmlFor="yes">Yes</CategoryLabel>
+            <CategoryLabel className={`text`} htmlFor="yes">Yes</CategoryLabel>
             <CategoryInput
               type="radio"
               name="stocks"
@@ -251,9 +264,10 @@ const NewProduct = () => {
               value="no"
               onChange={handleInput}
             />
-            <CategoryLabel htmlFor="no">No</CategoryLabel>
+            <CategoryLabel className={`text`} htmlFor="no">No</CategoryLabel>
             </Category>
           <Input
+            className={`placeholder`}
             name="stocks"
             type="number"
             placeholder="stocks"
@@ -261,6 +275,7 @@ const NewProduct = () => {
             onChange={handleInput}
           />
           <Input
+            className={`placeholder`}
             name="credit"
             type="text"
             placeholder="brand's website url"
@@ -268,6 +283,7 @@ const NewProduct = () => {
             onChange={handleInput}
           />
           <Input
+            className={`placeholder`}
             name="logo"
             type="text"
             placeholder="logo image url"
@@ -275,7 +291,7 @@ const NewProduct = () => {
             onChange={handleInput}
           />
           <Category>
-            <CategoryLabel>Category:</CategoryLabel>
+            <CategoryLabel className={`text`}>Category:</CategoryLabel>
             <CategoryInput
               type="radio"
               name="category"
@@ -283,7 +299,7 @@ const NewProduct = () => {
               value="men"
               onChange={handleInput}
             />
-            <CategoryLabel htmlFor="men">Men</CategoryLabel>
+            <CategoryLabel className={`text`} htmlFor="men">Men</CategoryLabel>
             <CategoryInput
               type="radio"
               name="category"
@@ -291,7 +307,7 @@ const NewProduct = () => {
               value="women"
               onChange={handleInput}
             />
-            <CategoryLabel htmlFor="women">Women</CategoryLabel>
+            <CategoryLabel className={`text`} htmlFor="women">Women</CategoryLabel>
           </Category>
           <ProductItem>
             <Label>Image</Label>
@@ -311,6 +327,7 @@ const NewProduct = () => {
         </Form>
       </Wrapper>
     </Container>
+    </div>
   );
 };
 export default NewProduct;

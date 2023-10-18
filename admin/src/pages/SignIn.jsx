@@ -4,6 +4,9 @@ import NotAdmin from "../components/Modal/NotAdmin";
 import { useState } from "react";
 import { signinRequest } from "../redux/authRedux";
 import { useDispatch, useSelector } from "react-redux";
+import { useContext } from "react";
+import { DarkModeContext } from "../context/darkModeContext";
+import '../styles/dark.scss'
 
 const Container = styled.div``;
 const MainContainer = styled.div`
@@ -68,17 +71,19 @@ const SignIn = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const { isFetching, error, currentUser } = useSelector((state) => state.user);
+  const { darkMode } = useContext(DarkModeContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     signinRequest(dispatch, { username, password });
   };
   return (
+    <div className={darkMode ? "app dark" : "app"}>
     <Container>
       <NotAdmin display={currentUser?.isAdmin === false ? "flex" : "none"} />
       <FailedModal display={error === false ? "none" : "flex"} />
       <MainContainer>
-        <Title>VIKKILINI ADMIN DASHBOARD</Title>
+        <Title className={`text`}>VIKKILINI ADMIN DASHBOARD</Title>
         <Wrapper>
           <Form>
             <InputField
@@ -86,20 +91,23 @@ const SignIn = () => {
               placeholder="username"
               onChange={(e) => setUsername(e.target.value)}
               required
+              className={`placeholder`}
             />
             <InputField
               type="password"
               placeholder="password"
               onChange={(e) => setPassword(e.target.value)}
               required
+              className={`placeholder`}
             />
-            <Button onClick={handleSubmit} disabled={isFetching ? true : false}>
+            <Button className={`button`} onClick={handleSubmit} disabled={isFetching ? true : false}>
               Sign In
             </Button>
           </Form>
         </Wrapper>
       </MainContainer>
     </Container>
+    </div>
   );
 };
 

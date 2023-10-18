@@ -274,7 +274,7 @@ const Order = () => {
       <Wrapper>
         <Title>ORDER ID #{item._id.substring(0, 12)}</Title>
         <TextContainer style={{ paddingTop: "20px" }}>
-          <BackButton>
+          <BackButton className={`text`}>
             <Action
               onClick={() => {
                 navigate(-1);
@@ -322,8 +322,8 @@ const Order = () => {
                         >
                           <Image src={i.productId.img} />
                         </ProductImage>
-                        <ProductDetails>
-                          <ProductName>{i.productId.name}</ProductName>
+                        <ProductDetails >
+                          <ProductName >{i.productId.name}</ProductName>
                           <ProductInfo>{i.productId.brand}</ProductInfo>
                           <ProductInfo> {i.productId.size} US</ProductInfo>
                           <ProductColor>

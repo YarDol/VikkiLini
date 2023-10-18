@@ -274,11 +274,12 @@ const Order = () => {
       <Wrapper>
         <Title>ORDER ID #{item._id.substring(0, 12)}</Title>
         <TextContainer style={{ paddingTop: "20px" }}>
-          <BackButton className={`text`}>
+          <BackButton >
             <Action
               onClick={() => {
                 navigate(-1);
               }}
+              className={`text`}
             >
               <ArrowRightAltIcon style={{ transform: "rotate(180deg)" }} />
               <Text>back</Text>
@@ -322,16 +323,16 @@ const Order = () => {
                         >
                           <Image src={i.productId.img} />
                         </ProductImage>
-                        <ProductDetails >
-                          <ProductName >{i.productId.name}</ProductName>
-                          <ProductInfo>{i.productId.brand}</ProductInfo>
-                          <ProductInfo> {i.productId.size} US</ProductInfo>
-                          <ProductColor>
+                        <ProductDetails className={`text`}>
+                          <ProductName className={`text`}>{i.productId.name}</ProductName>
+                          <ProductInfo className={`text`}>{i.productId.brand}</ProductInfo>
+                          <ProductInfo className={`text`}> {i.productId.size} US</ProductInfo>
+                          <ProductColor >
                             <ColorOutline>
                               <BoxColor color={i.productId.color} />
                             </ColorOutline>
                           </ProductColor>
-                          <ProductInfo>Qty: {i.productId.quantity}</ProductInfo>
+                          <ProductInfo className={`text`}>Qty: {i.productId.quantity}</ProductInfo>
                         </ProductDetails>
                       </Details>
                     </Left>

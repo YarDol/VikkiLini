@@ -40,8 +40,11 @@ const InputContainer = styled.div`
   justify-content: space-between;
   border: 2px solid black;
   border-radius: 30px;
-  ${tablet({ width: "80%", justifyContent: "center" })}
-  ${mobile({ width: "80%", justifyContent: "center" })}
+  @media (max-width: 768px) {
+  input::placeholder {
+    font-size: 12px; 
+  }
+}
 `;
 
 const Input = styled.input`
@@ -63,8 +66,8 @@ const Button = styled.button`
   border: none;
   background-color: white;
   display: flex;
-  align-items: center; /* Вирівнювання стрілки по вертикалі */
-  justify-content: center; /* Вирівнювання стрілки по горизонталі */
+  align-items: center; 
+  justify-content: center; 
 `;
 
 const Message = styled.div`
@@ -72,6 +75,7 @@ const Message = styled.div`
   font-size: 16px;
   text-align: center;
   color: green;
+  ${mobile({ flex: "5" })}
 `;
 
 const Newsletter = () => {

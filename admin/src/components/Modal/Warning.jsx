@@ -6,6 +6,9 @@ import { deleteMember, deleteProduct } from "../../redux/authRedux";
 import CloseIcon from "@mui/icons-material/Close";
 import Notification from "./Notification";
 import { useLocation } from "react-router-dom";
+import { useContext } from "react";
+import { DarkModeContext } from "../../context/darkModeContext";
+import '../../styles/dark.scss'
 
 const Container = styled.div`
   width: 100%;
@@ -63,6 +66,7 @@ const Button = styled.button`
 const Warning = ({ display }) => {
   const dispatch = useDispatch();
   const location = useLocation();
+  const { darkMode } = useContext(DarkModeContext);
   const path = location.pathname.split("/")[1];
   const [remove, setRemove] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -87,10 +91,11 @@ const Warning = ({ display }) => {
     }, 2000);
   };
   return (
-    <Container display={modal.open ? "flex" : "none"}>
+    <div className={darkMode ? "app dark" : "app"}>
+    <Container display={modal.open ? "flex" : "none"} >
       <Notification open={remove} setOpen={setRemove} type="remove" />
-      <Wrapper>
-        <CloseButton>
+      <Wrapper className={`form`}>
+        <CloseButton className={`back-button`}>
           <CloseIcon onClick={handleClose} />
         </CloseButton>
         <Header>Warning</Header>
@@ -106,6 +111,7 @@ const Warning = ({ display }) => {
         </Button>
       </Wrapper>
     </Container>
+    </div>
   );
 };
 

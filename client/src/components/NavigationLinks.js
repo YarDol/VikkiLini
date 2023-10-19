@@ -1,7 +1,7 @@
 export const MenuList = [
-  { id: "men", title: "menu.men" },
-  { id: "women", title: "menu.women" },
-  { id: "brands", title: "menu.brands" },
+  { id: "men", title: "menu.men", path: "/products/men" },
+  { id: "women", title: "menu.women", path: "/products/women" },
+  { id: "brands", title: "menu.brands", path: "/products/instock" },
 ];
 
 export const BrandList = [

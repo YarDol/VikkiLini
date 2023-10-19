@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { mobile } from "../responsive";
 import { useContext } from "react";
 import { DarkModeContext } from "../context/darkModeContext";
+import { useSelector } from "react-redux";
 
 const Container = styled.div`
   margin: auto;
@@ -52,6 +53,11 @@ const Widget = styled.div`
 
 const Dashboard = () => {
   const { darkMode } = useContext(DarkModeContext);
+  const user = useSelector((state) => state.user.currentUser);
+  const initials = () => {
+    const fullName = user?.firstname.toUpperCase();
+    return fullName;
+  };
   return (
     <div className={darkMode ? "app dark" : "app"}>
         <Container>
@@ -59,7 +65,7 @@ const Dashboard = () => {
           <MainContent>
             <Sidebar>
             <Widget className={`widget`}>
-            Switch between colour themes for more comfort
+            current Admin: {initials()}
               </Widget>
               <Widget className={`widget`}>
                 <NewMembers/>

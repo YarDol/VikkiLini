@@ -40,7 +40,7 @@ const InputContainer = styled.div`
   justify-content: space-between;
   border: 2px solid black;
   border-radius: 30px;
-  @media (max-width: 768px) {
+  @media (max-width: 415px) {
   input::placeholder {
     font-size: 12px; 
   }
@@ -68,6 +68,10 @@ const Button = styled.button`
   display: flex;
   align-items: center; 
   justify-content: center; 
+  @media (max-width: 768px) {
+    /* При ширині екрану менше 768px кнопку робимо невидимою */
+    display: none;
+  }
 `;
 
 const Message = styled.div`

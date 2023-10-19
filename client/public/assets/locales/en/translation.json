@@ -66,7 +66,7 @@
         "fos": "Follow us on",
         "gao": "Get the app on"
     },
-    "menu": "Menu",
+    "menu1": "Menu",
     "sbp": "Style, beauty, power",
     "subscr": "Contact us to get latest updates from your favorite brand and great deals.",
     "orderN": "Order No.",
@@ -165,5 +165,10 @@
         "3": "Successfully removed!",
         "4": "Please select size and color first.",
         "5": "Copied to clipboard!"
-    }
+    },
+    "menu": {
+        "men": "Men",
+        "women": "Women",
+        "brands": "Brands"
+      }
 }

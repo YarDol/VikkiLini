@@ -211,7 +211,7 @@ const MobileNavbar = () => {
           <CloseIcon onClick={handleMenu} />
         </CloseLeft>
         <Top>
-          <Logo>{t('menu')}</Logo>
+          <Logo>{t('menu1')}</Logo>
         </Top>
         {MenuList.map((menu, index) => {
           return (
@@ -223,7 +223,7 @@ const MobileNavbar = () => {
                   setOpenMenu(false); // Close the overlay when a category is selected.
                 }}
               >
-                {menu.title}
+                {t(menu.title)}
               </OverlayItem>
             </OverlayContent>
           );

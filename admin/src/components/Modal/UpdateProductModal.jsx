@@ -158,9 +158,26 @@ const UpdateProductModal = () => {
       return { ...prev, [e.target.name]: e.target.value };
     });
   };
-  const handleSizes = (e) => setSizes(e.target.value.split(","));
-  const handleColors = (e) => setColors(e.target.value.split(","));
-  const arrSizes = sizes?.map((i) => Number(i));
+  const handleSizes = (e) => {
+    const newSizes = e.target.value.split(",");
+    if (!arraysEqual(newSizes, sizes)) {
+      setSizes((prevSizes) => [...newSizes]);
+    }
+  }
+  const handleColors = (e) => {
+    const newColors = e.target.value.split(",");
+    if (!arraysEqual(newColors, colors)) {
+      setColors((prevColors) => [...newColors]);
+    }
+  }; 
+
+  function arraysEqual(arr1, arr2) {
+    if (arr1.length !== arr2.length) return false;
+    for (let i = 0; i < arr1.length; i++) {
+      if (arr1[i] !== arr2[i]) return false;
+    }
+    return true;
+  }
 
   const handleUpdate = (e) => {
     e.preventDefault();
@@ -184,7 +201,7 @@ const UpdateProductModal = () => {
             const finalProduct = {
               ...inputs,
               img: downloadURL,
-              size: arrSizes,
+              size: sizes,
               color: colors,
             };
             updateProduct(productId, finalProduct, dispatch);
@@ -200,7 +217,7 @@ const UpdateProductModal = () => {
       const finalProduct = {
         ...inputs,
         img: file,
-        size: arrSizes,
+        size: sizes,
         color: colors,
       };
       updateProduct(productId, finalProduct, dispatch);
@@ -242,7 +259,7 @@ const UpdateProductModal = () => {
             name="brand"
             value={inputs.brand}
             type="text"
-            placeholder="brand"
+            placeholder="text"
             onChange={handleInput}
           />
           <Input
@@ -258,6 +275,7 @@ const UpdateProductModal = () => {
             name="color"
             type="text"
             placeholder="color"
+            value={colors}
             onChange={handleColors}
           />
           <Input
@@ -265,6 +283,7 @@ const UpdateProductModal = () => {
             name="size"
             type="text"
             placeholder="size"
+            value={sizes}
             onChange={handleSizes}
           />
           <Input
@@ -272,12 +291,14 @@ const UpdateProductModal = () => {
             name="stocks"
             type="number"
             placeholder="stocks"
+            value={inputs.stocks}
             onChange={handleInput}
           />
           <Input
             className={`placeholder`}
             name="credit"
             type="text"
+            placeholder="credit"
             value={inputs.credit}
             onChange={handleInput}
           />
@@ -285,6 +306,7 @@ const UpdateProductModal = () => {
             className={`placeholder`}
             name="logo"
             type="text"
+            placeholder="logo"
             value={inputs.logo}
             onChange={handleInput}
           />

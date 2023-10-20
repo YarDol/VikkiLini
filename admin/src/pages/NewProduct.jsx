@@ -145,7 +145,6 @@ const NewProduct = () => {
   const handleSizes = (e) => setSizes(e.target.value.split(","));
   const handleColors = (e) => setColors(e.target.value.split(","));
 
-  const arrSizes = sizes?.map((i) => Number(i));
   const handleSubmit = (e) => {
     setAdd(true);
     e.preventDefault();
@@ -168,7 +167,7 @@ const NewProduct = () => {
           const product = {
             ...inputs,
             img: downloadURL,
-            size: arrSizes,
+            size: sizes,
             color: colors,
           };
           addProduct(product, dispatch);

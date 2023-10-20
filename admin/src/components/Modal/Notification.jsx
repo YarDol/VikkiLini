@@ -21,7 +21,7 @@ const Notification = ({ open, setOpen, type }) => {
         <MuiAlert
           onClose={handleClose}
           style={{
-            backgroundColor: "#110f12",
+            backgroundColor: "#3e3e3e",
             marginTop: "80px",
           }}
           severity={type === "remove" ? "error" : "success"}

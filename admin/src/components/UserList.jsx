@@ -1,12 +1,11 @@
 import { DataGrid } from "@mui/x-data-grid";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { getMembers } from "../redux/authRedux";
 import { openModal } from "../redux/modalRedux";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
 import { DarkModeContext } from "../context/darkModeContext";
 import '../styles/dark.scss'
 

@@ -1,7 +1,6 @@
 import { DataGrid } from "@mui/x-data-grid";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import styled from "styled-components";
 import { formatAmount } from "../utility/formatAmount";
 import { formatDate } from "../utility/formatDate";
 import { getOrders } from "../redux/authRedux";
@@ -9,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { DarkModeContext } from "../context/darkModeContext";
 import '../styles/dark.scss'
+import styled from "styled-components";
 
 const MainContainer = styled.div`
   margin: 20px auto;

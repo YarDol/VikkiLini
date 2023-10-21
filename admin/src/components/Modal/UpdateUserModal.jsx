@@ -3,13 +3,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import { closeModal } from "../../redux/modalRedux";
 import { updateMember } from "../../redux/authRedux";
-import styled from "styled-components";
 import { mobile } from "../../responsive";
-import Notification from "./Notification";
-import CloseIcon from "@mui/icons-material/Close";
 import { useContext } from "react";
 import { DarkModeContext } from "../../context/darkModeContext";
-import '../../styles/dark.scss'
+import Notification from "./Notification";
+import CloseIcon from "@mui/icons-material/Close";
+import '../../styles/dark.scss';
+import styled from "styled-components";
 
 const ModalContainer = styled.div`
   width: 100%;

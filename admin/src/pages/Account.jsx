@@ -1,15 +1,16 @@
 import styled from "styled-components";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import EditIcon from "@mui/icons-material/Edit";
+import UpdateUserModal from "../components/Modal/UpdateUserModal";
+import AddIcon from "@mui/icons-material/Add";
+import '../styles/dark.scss'
+import { useContext } from "react";
+import { DarkModeContext } from "../context/darkModeContext";
 import { openModal } from "../redux/modalRedux";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import { mobile } from "../responsive";
-import UpdateUserModal from "../components/Modal/UpdateUserModal";
-import AddIcon from "@mui/icons-material/Add";
-import { useContext } from "react";
-import { DarkModeContext } from "../context/darkModeContext";
-import '../styles/dark.scss'
+
 
 const Container = styled.div``;
 const MainContainer = styled.div`

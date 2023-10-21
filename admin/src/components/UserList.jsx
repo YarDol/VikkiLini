@@ -65,7 +65,7 @@ const UserList = () => {
           <ListItem
             style={{ cursor: "pointer" }}
             onClick={() => {
-              params.row.isAdmin && navigate("/account");
+              navigate("/users/" + params.row._id);
             }}
           >
             {fullName(params.row.firstname, params.row.lastname)}
@@ -82,7 +82,7 @@ const UserList = () => {
           <ListItem
             style={{ cursor: "pointer" }}
             onClick={() => {
-              params.row.isAdmin && navigate("/account");
+              navigate("/users/" + params.row._id);
             }}
           >
             {params.row.email}
@@ -99,7 +99,7 @@ const UserList = () => {
           <ListItem
             style={{ cursor: "pointer" }}
             onClick={() => {
-              params.row.isAdmin && navigate("/account");
+              navigate("/users/" + params.row._id);
             }}
           >
             {params.row.username}

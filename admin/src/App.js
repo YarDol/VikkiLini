@@ -46,6 +46,7 @@ function App() {
                 <Route path="/products" element={<AllProducts />} />
                 <Route path="/product/:productId" element={<Product />} />
                 <Route path="/users" element={<AllUsers />} />
+                <Route path="/users/:userId" element={<Account />} />
                 <Route path="*" element={<Page404 />}></Route>
               </>
             )}

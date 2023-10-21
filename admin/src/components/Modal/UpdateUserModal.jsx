@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { closeModal } from "../../redux/modalRedux";
 import { updateMember } from "../../redux/authRedux";
 import styled from "styled-components";
@@ -89,12 +89,12 @@ const Button = styled.button`
 const UpdateUserModal = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   const { darkMode } = useContext(DarkModeContext);
+  const userId = location.pathname.split("/")[2];
   const modal = useSelector((state) => state.modal);
-  const currentUser = useSelector((state) => state.user.currentUser);
-  const adminId = currentUser._id;
   const admin = useSelector((state) =>
-    state.member.members.find((admin) => admin._id === adminId)
+    state.member.members.find((admin) => admin._id === userId)
   );
   const [input, setInput] = useState({});
   const [loading, setLoading] = useState(false);
@@ -103,7 +103,7 @@ const UpdateUserModal = () => {
   const handleUpdate = (e) => {
     e.preventDefault();
     setUpdate(true);
-    const userID = currentUser?._id;
+    const userID = userId;
     const userInput = { ...input };
     setLoading(true);
     updateMember(userID, userInput, dispatch);

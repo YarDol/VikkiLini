@@ -8,7 +8,7 @@ import { useContext } from "react";
 import { DarkModeContext } from "../context/darkModeContext";
 import { openModal } from "../redux/modalRedux";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { mobile } from "../responsive";
 
 
@@ -106,23 +106,23 @@ const InfoText = styled.p``;
 const Account = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const location = useLocation();
-  const { darkMode } = useContext(DarkModeContext);
-  const userId = location.pathname.split("/")[2];
+  const currentUser = useSelector((state) => state.user.currentUser);
+  const adminId = currentUser._id;
   const admin = useSelector((state) =>
-    state.member.members.find((admin) => admin._id === userId)
+    state.member.members.find((admin) => admin._id === adminId)
   );
-  
-  const handleModal = (type) => {
-    dispatch(openModal(type));
-  }
-  
+  const handleModal = (type) => dispatch(openModal(type));
+  const capitalize = (text) => {
+    return text[0]?.toUpperCase() + text?.slice(1);
+  };
+  const { darkMode } = useContext(DarkModeContext);
+
   return (
     <div className={darkMode ? "app dark" : "app"}>
     <Container>
       <UpdateUserModal />
       <MainContainer>
-        <Title>{admin.firstname} Account</Title>
+        <Title>{capitalize(admin?.firstname)} Account</Title>
         <TextContainer style={{ paddingTop: "20px" }}>
           <Left>
             <Action
@@ -154,7 +154,7 @@ const Account = () => {
               <InfoText className={`text`}>First Name:</InfoText>
             </Category>
             <Value>
-              <InfoText>{admin.firstname}</InfoText>
+              <InfoText>{capitalize(admin?.firstname)}</InfoText>
             </Value>
             <EditButton className={`pencil`}>
               <EditIcon onClick={() => handleModal("First Name")} />
@@ -165,7 +165,7 @@ const Account = () => {
               <InfoText className={`text`}>Last Name:</InfoText>
             </Category>
             <Value>
-              <InfoText>{admin.lastname}</InfoText>
+              <InfoText>{capitalize(admin?.lastname)}</InfoText>
             </Value>
             <EditButton className={`pencil`}>
               <EditIcon onClick={() => handleModal("Last Name")} />
@@ -176,7 +176,7 @@ const Account = () => {
               <InfoText className={`text`}>Username:</InfoText>
             </Category>
             <Value>
-              <InfoText>{admin.username}</InfoText>
+              <InfoText>{admin?.username}</InfoText>
             </Value>
             <EditButton className={`pencil`}>
               <EditIcon onClick={() => handleModal("Username")} />
@@ -187,7 +187,7 @@ const Account = () => {
               <InfoText className={`text`}>Email:</InfoText>
             </Category>
             <Value>
-              <InfoText>{admin.email}</InfoText>
+              <InfoText>{admin?.email}</InfoText>
             </Value>
             <EditButton className={`pencil`}>
               <EditIcon onClick={() => handleModal("Email")} />
@@ -198,7 +198,7 @@ const Account = () => {
               <InfoText className={`text`}>Password:</InfoText>
             </Category>
             <Value>
-              <InfoText value={admin.name}>••••••••••</InfoText>
+              <InfoText>••••••••••</InfoText>
             </Value>
             <EditButton className={`pencil`}>
               <EditIcon onClick={() => handleModal("Password")} />

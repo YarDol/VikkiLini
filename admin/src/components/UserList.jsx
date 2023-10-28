@@ -5,7 +5,6 @@ import React, { useEffect, useState, useContext } from "react";
 import { getMembers } from "../redux/authRedux";
 import { openModal } from "../redux/modalRedux";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
 import { DarkModeContext } from "../context/darkModeContext";
 import '../styles/dark.scss'
 
@@ -30,7 +29,6 @@ const Action = styled.div`
 
 const UserList = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const members = useSelector((state) => state.member.members);
   const [pageSize, setPageSize] = useState(8);
   const { darkMode } = useContext(DarkModeContext);
@@ -63,11 +61,7 @@ const UserList = () => {
       renderCell: (params) => {
         return (
           <ListItem
-            style={{ cursor: "pointer" }}
-            onClick={() => {
-              navigate("/users/" + params.row._id);
-            }}
-          >
+            style={{ cursor: "pointer" }}>
             {fullName(params.row.firstname, params.row.lastname)}
           </ListItem>
         );
@@ -80,11 +74,7 @@ const UserList = () => {
       renderCell: (params) => {
         return (
           <ListItem
-            style={{ cursor: "pointer" }}
-            onClick={() => {
-              navigate("/users/" + params.row._id);
-            }}
-          >
+            style={{ cursor: "pointer" }}>
             {params.row.email}
           </ListItem>
         );
@@ -97,11 +87,7 @@ const UserList = () => {
       renderCell: (params) => {
         return (
           <ListItem
-            style={{ cursor: "pointer" }}
-            onClick={() => {
-              navigate("/users/" + params.row._id);
-            }}
-          >
+            style={{ cursor: "pointer" }}>
             {params.row.username}
           </ListItem>
         );

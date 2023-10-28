@@ -126,10 +126,21 @@ const Left = styled.div`
   flex: 1;
   display: flex;
   align-items: center;
-  padding: 60px 475px 0;
+  padding: 60px 0 0;
   min-width: 240px;
   ${tablet({ flex: "1" })}
   ${mobile({ padding: "0", flexWrap: "wrap", minWidth: "120px" })}
+`;
+
+const BackButton = styled(Action)`
+  cursor: pointer;
+  align-items: center;
+  color: grey;
+  font-size: 0.9rem;
+  &:hover {
+    color: black;
+  }
+  padding-left: 1000px;
 `;
 
 const SignUp = () => {
@@ -176,15 +187,15 @@ const SignUp = () => {
       <Navbar />
       <MainContainer> 
         <Left>
-      <Action
+          <BackButton
               onClick={() => {
                 navigate(-1);
               }}
             >
               <ArrowRightAltIcon style={{ transform: "rotate(180deg)" }} />
               <Text>{t('back')}</Text>
-            </Action>
-            </Left>
+            </BackButton>
+          </Left>
         <Wrapper>
           <Title>{t('fam')}</Title>
           <Form onSubmit={handleSubmit}>

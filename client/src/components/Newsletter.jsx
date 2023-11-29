@@ -48,16 +48,27 @@ const InputContainer = styled.div`
 `;
 
 const Input = styled.input`
-  text-indent: 10px;
-  border-radius: 30px;
   border: none;
+  border-radius: 20px;
   flex: 8;
   padding-left: 20px;
   &:focus {
     outline: none !important;
   }
-  ${mobile({ flex: "5" })}
+
+  &::placeholder {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  ${mobile({ 
+    flex: "5",
+    maxWidth: "80%",
+    fontSize: "14px"
+  })}
 `;
+
 
 const Button = styled.button`
   cursor: pointer;
@@ -69,7 +80,6 @@ const Button = styled.button`
   align-items: center; 
   justify-content: center; 
   @media (max-width: 768px) {
-    /* При ширині екрану менше 768px кнопку робимо невидимою */
     display: none;
   }
 `;

@@ -97,7 +97,7 @@ const ForgetPassword = () => {
     //     input
     //   );
     const res = await axios.post(
-            `${process.env.REACT_APP_BASE_URL}/auth/forget-password/${id}/${token}`,
+            `${process.env.REACT_APP_BASE_URL}auth/forget-password/${id}/${token}`,
             input
           );
       if (res.status === 200) {

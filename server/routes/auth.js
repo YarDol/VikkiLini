@@ -6,6 +6,7 @@ const nodemailer = require("nodemailer");
 const dotenv = require("dotenv");
 dotenv.config();
 const bcryptjs = require('bcryptjs');
+// const { sendEmailtoUser } = require("../config/emailTemplate");
 
 //SIGN UP
 router.post("/signup", async (req, res) => {
@@ -20,6 +21,16 @@ router.post("/signup", async (req, res) => {
       process.env.SECRET
     ).toString(),
   });
+
+  // const secretKey = "welcomeToFamily";
+
+  // const token = jwt.sign({ email: email }, secretKey, {
+  //   expiresIn: "10m",
+  // });
+
+  // const link = `http://localhost:3000/#/verify/${token}`;  
+
+  // sendEmailtoUser(link, email);
 
   try {
     // CHECK EMAIL
@@ -94,8 +105,8 @@ router.post("/forget-password", async (req, res) => {
 
         const token = jwt.sign({ userID: isUser._id }, secretKey, { expiresIn: "20m" });
 
-        // const link = `https://vikkilini.netlify.app/resetpassword/${isUser._id}/${token}`;
-        const link = `http://localhost:3000/#/reset/${isUser._id}/${token}`;
+        const link = `https://vikkilini.netlify.app/#/reset/${isUser._id}/${token}`;
+        // const link = `http://localhost:3000/#/reset/${isUser._id}/${token}`;
 
         const transport = nodemailer.createTransport({
           service: "gmail",
@@ -250,65 +261,121 @@ router.post("/forget-password", async (req, res) => {
 // RESET PASSWORD
 
 router.post("/forget-password/:id/:token", async (req, res) => {
-  if(req.params.id && req.params.token){
-    req.body.password = CryptoJS.AES.encrypt(
-      req.body.password,
-      process.env.SECRET
-    ).toString();
-  } 
-
-  try {
-    const updatedUser = await User.findByIdAndUpdate(
-      req.params.id,
-      {
-        $set: req.body,
-      },
-      { new: true }
-    );
-    res.status(200).json(updatedUser);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-
-
-  // const { id, token } = req.params;
-  // const { newPassword, confirmPassword } = req.body;
+  // if(req.params.id && req.params.token){
+  //   req.body.password = CryptoJS.AES.encrypt(
+  //     req.body.password,
+  //     process.env.SECRET
+  //   ).toString();
+  // } 
 
   // try {
-  //   if (id && token && newPassword && confirmPassword) {
-  //     if(newPassword === confirmPassword){
-  //       const isUser = await User.findById(id);
-  //       const secretKey = process.env.RESET_PASSWORD_KEY + isUser._id;
-  //       const isValid = await jwt.verify(token, secretKey);
-  //       if (isValid) {
-  //         // password hashing
-
-  //         const genSalt = await bcryptjs.genSalt(10);
-  //         const hashedPass = await bcryptjs.hash(newPassword, genSalt);
-
-  //         const isSuccess = await User.findByIdAndUpdate(isUser._id, {
-  //           $set: {
-  //             password: hashedPass,
-  //           },
-  //         });
-
-  //         if (isSuccess) {
-  //           return res.status(200).json({
-  //             message: "Password Changed Successfully",
-  //           });
-  //         }
-  //       } else {
-  //         return res.status(400).json({
-  //           message: "Link has been Expired",
-  //         });
-  //       }
-  //     }
-  //   }else{
-  //     res.status(400).json({ message: "All fields are required" });
-  //   }
+  //   const updatedUser = await User.findByIdAndUpdate(
+  //     req.params.id,
+  //     {
+  //       $set: req.body,
+  //     },
+  //     { new: true }
+  //   );
+  //   res.status(200).json(updatedUser);
   // } catch (err) {
   //   res.status(500).json(err);
   // }
+
+  // const { newpassword, confirmpassword } = req.body;
+  //   try {
+  //     if (newpassword === confirmpassword) {
+  //       const gensalt = await bcryptjs.genSalt(10);
+  //       const hashedPassword = await bcryptjs.hash(newpassword, gensalt);
+  //       await User.findByIdAndUpdate(req.params._id, {
+  //         $set: hashedPassword,
+  //       });
+  //       return res
+  //         .status(200)
+  //         .json({ message: "password Changed Successfully" });
+  //     } else {
+  //       return res
+  //         .status(400)
+  //         .json({ message: "password and confirm password does not match" });
+  //     }
+  //   } catch (error) {
+  //     return res.status(400).json({ message: error.message });
+  //   }
+
+
+  const { id, token } = req.params;
+  const { newPassword, confirmPassword } = req.body;
+
+  try {
+    if (id && token && newPassword && confirmPassword) {
+      if(newPassword === confirmPassword){
+        const isUser = await User.findById(id);
+        const secretKey = process.env.RESET_PASSWORD_KEY + isUser._id;
+        const isValid = await jwt.verify(token, secretKey);
+        if (isValid) {
+          // password hashing
+
+          const genSalt = await bcryptjs.genSalt(10);
+          const hashedPass = await bcryptjs.hash(newPassword, genSalt);
+
+          const isSuccess = await User.findByIdAndUpdate(isUser._id, {
+            $set: {
+              password: hashedPass,
+            },
+          });
+
+          if (isSuccess) {
+            return res.status(200).json({
+              message: "Password Changed Successfully",
+            });
+          }
+        } else {
+          return res.status(400).json({
+            message: "Link has been Expired",
+          });
+        }
+      }
+    }else{
+      res.status(400).json({ message: "All fields are required" });
+    }
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+router.post("/verify", async (req, res) => {
+  const { token } = req.params;
+    try {
+      if (token) {
+        // token verify
+        const secretKey = process.env.RESET_PASSWORD_KEY + isUser._id;
+        const isEmailVerified = await jwt.verify(token, secretKey);
+        if (isEmailVerified) {
+          const getUser = await authModel.findOne({
+            email: isEmailVerified.email,
+          });
+
+          const saveEmail = await authModel.findByIdAndUpdate(getUser._id, {
+            $set: {
+              isVerified: true,
+            },
+          });
+
+          if (saveEmail) {
+            return res
+              .status(200)
+              .json({ message: "Email Verification Success" });
+          }
+
+          //
+        } else {
+          return res.status(400).json({ message: "Link Expired" });
+        }
+      } else {
+        return res.status(400).json({ message: "Invalid URL" });
+      }
+    } catch (error) {
+      return res.status(400).json({ message: error.message });
+    }
 });
 
 module.exports = router;

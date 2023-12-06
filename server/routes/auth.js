@@ -6,7 +6,6 @@ const nodemailer = require("nodemailer");
 const dotenv = require("dotenv");
 dotenv.config();
 const bcryptjs = require('bcryptjs');
-// const { sendEmailtoUser } = require("../config/emailTemplate");
 
 //SIGN UP
 router.post("/signup", async (req, res) => {
@@ -21,16 +20,6 @@ router.post("/signup", async (req, res) => {
       process.env.SECRET
     ).toString(),
   });
-
-  // const secretKey = "welcomeToFamily";
-
-  // const token = jwt.sign({ email: email }, secretKey, {
-  //   expiresIn: "10m",
-  // });
-
-  // const link = `http://localhost:3000/#/verify/${token}`;  
-
-  // sendEmailtoUser(link, email);
 
   try {
     // CHECK EMAIL
@@ -261,46 +250,6 @@ router.post("/forget-password", async (req, res) => {
 // RESET PASSWORD
 
 router.post("/forget-password/:id/:token", async (req, res) => {
-  // if(req.params.id && req.params.token){
-  //   req.body.password = CryptoJS.AES.encrypt(
-  //     req.body.password,
-  //     process.env.SECRET
-  //   ).toString();
-  // } 
-
-  // try {
-  //   const updatedUser = await User.findByIdAndUpdate(
-  //     req.params.id,
-  //     {
-  //       $set: req.body,
-  //     },
-  //     { new: true }
-  //   );
-  //   res.status(200).json(updatedUser);
-  // } catch (err) {
-  //   res.status(500).json(err);
-  // }
-
-  // const { newpassword, confirmpassword } = req.body;
-  //   try {
-  //     if (newpassword === confirmpassword) {
-  //       const gensalt = await bcryptjs.genSalt(10);
-  //       const hashedPassword = await bcryptjs.hash(newpassword, gensalt);
-  //       await User.findByIdAndUpdate(req.params._id, {
-  //         $set: hashedPassword,
-  //       });
-  //       return res
-  //         .status(200)
-  //         .json({ message: "password Changed Successfully" });
-  //     } else {
-  //       return res
-  //         .status(400)
-  //         .json({ message: "password and confirm password does not match" });
-  //     }
-  //   } catch (error) {
-  //     return res.status(400).json({ message: error.message });
-  //   }
-
 
   const { id, token } = req.params;
   const { newPassword, confirmPassword } = req.body;

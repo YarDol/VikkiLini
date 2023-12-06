@@ -5,7 +5,6 @@ const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
 const dotenv = require("dotenv");
 dotenv.config();
-const bcryptjs = require('bcryptjs');
 
 //SIGN UP
 router.post("/signup", async (req, res) => {
@@ -94,8 +93,8 @@ router.post("/forget-password", async (req, res) => {
 
         const token = jwt.sign({ userID: isUser._id }, secretKey, { expiresIn: "20m" });
 
-        // const link = `https://vikkilini.netlify.app/#/reset/${isUser._id}/${token}`;
-        const link = `http://localhost:3000/#/reset/${isUser._id}/${token}`;
+        const link = `https://vikkilini.netlify.app/#/reset/${isUser._id}/${token}`;
+        // const link = `http://localhost:3000/#/reset/${isUser._id}/${token}`;
 
         const transport = nodemailer.createTransport({
           service: "gmail",
@@ -290,41 +289,5 @@ router.post("/forget-password/:id/:token", async (req, res) => {
     res.status(500).json(err);
   }
 });
-
-// router.post("/verify", async (req, res) => {
-//   const { token } = req.params;
-//     try {
-//       if (token) {
-//         // token verify
-//         const secretKey = process.env.RESET_PASSWORD_KEY + isUser._id;
-//         const isEmailVerified = await jwt.verify(token, secretKey);
-//         if (isEmailVerified) {
-//           const getUser = await authModel.findOne({
-//             email: isEmailVerified.email,
-//           });
-
-//           const saveEmail = await authModel.findByIdAndUpdate(getUser._id, {
-//             $set: {
-//               isVerified: true,
-//             },
-//           });
-
-//           if (saveEmail) {
-//             return res
-//               .status(200)
-//               .json({ message: "Email Verification Success" });
-//           }
-
-//           //
-//         } else {
-//           return res.status(400).json({ message: "Link Expired" });
-//         }
-//       } else {
-//         return res.status(400).json({ message: "Invalid URL" });
-//       }
-//     } catch (error) {
-//       return res.status(400).json({ message: error.message });
-//     }
-// });
 
 module.exports = router;

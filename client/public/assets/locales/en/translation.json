@@ -173,5 +173,8 @@
     },
     "frt_pass": "A password recovery link has been sent to your email",
     "send": "Send",
-    "reset_pass": "Reset Password"
+    "reset_pass": "Reset Password",
+    "chg_pass": "Change Password",
+    "new_pass_scc": "Password successfully changed!",
+    "new_pass_title": "New password"
 }

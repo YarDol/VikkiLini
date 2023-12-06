@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { useEffect } from "react";
 
 const Container = styled.div``;
 const MainContainer = styled.div`
@@ -38,6 +39,13 @@ const Wrapper = styled.div`
 const Form = styled.form`
   display: flex;
   flex-direction: column;
+`;
+const Message = styled.div`
+  margin-top: 10px;
+  font-size: 16px;
+  text-align: center;
+  color: green;
+  ${mobile({ flex: "5" })}
 `;
 
 const InputField = styled.input`
@@ -83,6 +91,7 @@ const Options = styled.a`
 
 const ForgetPassword = () => {
   const navigate = useNavigate();
+  const [send, setSend] = useState(false);
   const [input, setInput] = useState({
     newPassword: "",
     confirmPassword: "",
@@ -101,10 +110,18 @@ const ForgetPassword = () => {
             input
           );
       if (res.status === 200) {
-        alert("password changed Successfully");
-        navigate("/");
+        setSend(true);
       }
   };
+  useEffect(() => {
+    if (send) {
+      const timer = setTimeout(() => {
+        navigate('/');
+      }, 5000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [send, navigate]);
   
   return (
     <Container>
@@ -112,7 +129,7 @@ const ForgetPassword = () => {
       <Promotion />
       <Navbar />
       <MainContainer>
-        <Title>Change Password</Title>
+        <Title>{t('new_pass_title')}</Title>
         <Wrapper>
           <Form>
           <InputField
@@ -134,9 +151,12 @@ const ForgetPassword = () => {
                 name="confirmPassword"
             />
             <Button onClick={handleSubmit} disabled={isFetching ? true : false}>
-              Change Password
+            {t('chg_pass')}
             </Button>
           </Form>
+          {send ? ( 
+          <Message>{t('new_pass_scc')}</Message>
+        ) : null}
           <Options
             onClick={() => {
               navigate("/sign-in");

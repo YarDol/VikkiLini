@@ -19,6 +19,8 @@ import {
   import { useSelector } from "react-redux";
   import ScrollToTop  from "./utility/ScrollToTop";
   import Page404 from "./utility/404";
+import ForgetPassword from "./pages/ForgetPassword";
+import ChangePassword from "./pages/ChangePassword";
 
   
   const App = () => {
@@ -56,6 +58,14 @@ import {
             <Route
               path="/sign-up"
               element={user ? <Navigate to={-2} /> : <SignUp />}
+            ></Route>
+            <Route
+              path="/forget-password"
+              element={user ? <Navigate to={-2} /> : <ForgetPassword />}
+            ></Route>
+            <Route
+              path="/reset/:id/:token"
+              element={user ? <Navigate to={-2} /> : <ChangePassword />}
             ></Route>
             <Route path="*" element={<Page404 />}></Route>
           </Routes>

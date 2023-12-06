@@ -6,9 +6,9 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Promotion from "../components/Promotion";
 import { useState } from "react";
-import { signinRequest } from "../redux/authRedux";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
+import axios from "axios";
 
 const Container = styled.div``;
 const MainContainer = styled.div`
@@ -70,23 +70,6 @@ const Button = styled.button`
     cursor: not-allowed;
   }
 `;
-const Agreement = styled.label`
-  color: grey;
-  width: "85%";
-  font-size: 12px;
-  text-align: left;
-  padding-bottom: 10px;
-  display: block;
-  margin-left: 60px;
-  text-indent: -20px;
-  ${mobile({ marginLeft: "25px" })};
-`;
-const CheckBox = styled.input`
-  vertical-align: middle;
-  position: relative;
-  margin-right: 10px;
-  bottom: 1px;
-`;
 const Options = styled.a`
   margin: 8px 0px;
   font-size: 12px;
@@ -97,62 +80,48 @@ const Options = styled.a`
   flex-direction: column;
 `;
 
-const SignIn = () => {
+const ChangePassword = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
   const { isFetching, error } = useSelector((state) => state.user);
   const {t} = useTranslation();
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    signinRequest(dispatch, { username, password });
+    // const res = await axios.post("http://localhost:5000/api/auth/forget-password", { email });
+    const res = await axios.post(`${process.env.REACT_APP_BASE_URL}/auth/forget-password`, { email });
+    
+    if (res) {
+      alert("email Sent");
+    }
   };
+  
   return (
     <Container>
       <FailedModal display={error === false ? "none" : "flex"} />
       <Promotion />
       <Navbar />
       <MainContainer>
-        <Title>{t('wlb')}</Title>
+        <Title>Reset password</Title>
         <Wrapper>
           <Form>
             <InputField
-              type="text"
-              placeholder="username"
-              onChange={(e) => setUsername(e.target.value)}
+              type="email"
+              placeholder="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
+              minLength={5}
             />
-            <InputField
-              type="password"
-              placeholder="password"
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-            <Agreement htmlFor="log" style={{ marginTop: "10px" }}>
-              <CheckBox
-                type="checkbox"
-                id="log"
-                style={{ marginRight: "10px" }}
-                defaultChecked
-              />
-              {t('kpl')}
-            </Agreement>
             <Button onClick={handleSubmit} disabled={isFetching ? true : false}>
-              {t('signin.1')}
+              Send
             </Button>
           </Form>
           <Options
             onClick={() => {
-              navigate("/forget-password");
-            }}
-          >{t('forgot')}</Options>
-          <Options
-            onClick={() => {
-              navigate("/sign-up");
+              navigate("/sign-in");
             }}
           >
-            {t('nmem')}
+            {t('back')}
           </Options>
         </Wrapper>
       </MainContainer>
@@ -161,4 +130,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default ChangePassword;

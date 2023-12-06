@@ -8,9 +8,11 @@ const TOKEN = currentUser?.accessToken;
 
 export const publicRequest = axios.create({
   baseURL: process.env.REACT_APP_BASE_URL,
+  // baseURL: BASE_URL,
 });
 
 export const userRequest = axios.create({
   baseURL: process.env.REACT_APP_BASE_URL,
+  // baseURL: BASE_URL,
   header: { token: `Bearer ${TOKEN}` },
 }); 

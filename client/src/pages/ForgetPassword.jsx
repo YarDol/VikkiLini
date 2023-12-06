@@ -38,7 +38,13 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
 `;
-
+const Message = styled.div`
+  margin-top: 10px;
+  font-size: 16px;
+  text-align: center;
+  color: green;
+  ${mobile({ flex: "5" })}
+`;
 const InputField = styled.input`
   flex: 1;
   width: 85%;
@@ -84,6 +90,7 @@ const ChangePassword = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const { isFetching, error } = useSelector((state) => state.user);
+  const [send, setSend] = useState(false);
   const {t} = useTranslation();
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -91,7 +98,7 @@ const ChangePassword = () => {
     const res = await axios.post(`${process.env.REACT_APP_BASE_URL}auth/forget-password`, { email });
     
     if (res) {
-      alert("email Sent");
+      setSend(true);
     }
   };
   
@@ -101,7 +108,7 @@ const ChangePassword = () => {
       <Promotion />
       <Navbar />
       <MainContainer>
-        <Title>Reset password</Title>
+        <Title>{t('reset_pass')}</Title>
         <Wrapper>
           <Form>
             <InputField
@@ -113,9 +120,12 @@ const ChangePassword = () => {
               minLength={5}
             />
             <Button onClick={handleSubmit} disabled={isFetching ? true : false}>
-              Send
+            {t('send')}
             </Button>
           </Form>
+          {send ? ( 
+          <Message>{t('frt_pass')}</Message>
+        ) : null}
           <Options
             onClick={() => {
               navigate("/sign-in");

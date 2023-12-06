@@ -170,5 +170,8 @@
         "men": "Men",
         "women": "Women",
         "brands": "Brands"
-      }
+    },
+    "frt_pass": "A password recovery link has been sent to your email",
+    "send": "Send",
+    "reset_pass": "Reset Password"
 }

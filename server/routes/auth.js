@@ -90,12 +90,12 @@ router.post("/forget-password", async (req, res) => {
       if (!isUser) {return res.status(401).json("Email not found")}
       else{
         // token
-        const secretKey = process.env.RESET_PASSWORD_KEY + isUser._id;
+        const secretKey = process.env.SECRET + isUser._id;
 
         const token = jwt.sign({ userID: isUser._id }, secretKey, { expiresIn: "20m" });
 
-        const link = `https://vikkilini.netlify.app/#/reset/${isUser._id}/${token}`;
-        // const link = `http://localhost:3000/#/reset/${isUser._id}/${token}`;
+        // const link = `https://vikkilini.netlify.app/#/reset/${isUser._id}/${token}`;
+        const link = `http://localhost:3000/#/reset/${isUser._id}/${token}`;
 
         const transport = nodemailer.createTransport({
           service: "gmail",
@@ -250,25 +250,25 @@ router.post("/forget-password", async (req, res) => {
 // RESET PASSWORD
 
 router.post("/forget-password/:id/:token", async (req, res) => {
-
   const { id, token } = req.params;
   const { newPassword, confirmPassword } = req.body;
 
   try {
     if (id && token && newPassword && confirmPassword) {
-      if(newPassword === confirmPassword){
+      if (newPassword === confirmPassword) {
         const isUser = await User.findById(id);
-        const secretKey = process.env.RESET_PASSWORD_KEY + isUser._id;
-        const isValid = await jwt.verify(token, secretKey);
-        if (isValid) {
-          // password hashing
+        const secretKey = process.env.SECRET + isUser._id;
+        const isValid = jwt.verify(token, secretKey);
 
-          const genSalt = await bcryptjs.genSalt(10);
-          const hashedPass = await bcryptjs.hash(newPassword, genSalt);
+        if (isValid) {
+          const encryptedNewPassword = CryptoJS.AES.encrypt(
+            newPassword,
+            process.env.SECRET
+          ).toString();
 
           const isSuccess = await User.findByIdAndUpdate(isUser._id, {
             $set: {
-              password: hashedPass,
+              password: encryptedNewPassword,
             },
           });
 
@@ -279,11 +279,11 @@ router.post("/forget-password/:id/:token", async (req, res) => {
           }
         } else {
           return res.status(400).json({
-            message: "Link has been Expired",
+            message: "Link has expired",
           });
         }
       }
-    }else{
+    } else {
       res.status(400).json({ message: "All fields are required" });
     }
   } catch (err) {
@@ -291,40 +291,40 @@ router.post("/forget-password/:id/:token", async (req, res) => {
   }
 });
 
-router.post("/verify", async (req, res) => {
-  const { token } = req.params;
-    try {
-      if (token) {
-        // token verify
-        const secretKey = process.env.RESET_PASSWORD_KEY + isUser._id;
-        const isEmailVerified = await jwt.verify(token, secretKey);
-        if (isEmailVerified) {
-          const getUser = await authModel.findOne({
-            email: isEmailVerified.email,
-          });
+// router.post("/verify", async (req, res) => {
+//   const { token } = req.params;
+//     try {
+//       if (token) {
+//         // token verify
+//         const secretKey = process.env.RESET_PASSWORD_KEY + isUser._id;
+//         const isEmailVerified = await jwt.verify(token, secretKey);
+//         if (isEmailVerified) {
+//           const getUser = await authModel.findOne({
+//             email: isEmailVerified.email,
+//           });
 
-          const saveEmail = await authModel.findByIdAndUpdate(getUser._id, {
-            $set: {
-              isVerified: true,
-            },
-          });
+//           const saveEmail = await authModel.findByIdAndUpdate(getUser._id, {
+//             $set: {
+//               isVerified: true,
+//             },
+//           });
 
-          if (saveEmail) {
-            return res
-              .status(200)
-              .json({ message: "Email Verification Success" });
-          }
+//           if (saveEmail) {
+//             return res
+//               .status(200)
+//               .json({ message: "Email Verification Success" });
+//           }
 
-          //
-        } else {
-          return res.status(400).json({ message: "Link Expired" });
-        }
-      } else {
-        return res.status(400).json({ message: "Invalid URL" });
-      }
-    } catch (error) {
-      return res.status(400).json({ message: error.message });
-    }
-});
+//           //
+//         } else {
+//           return res.status(400).json({ message: "Link Expired" });
+//         }
+//       } else {
+//         return res.status(400).json({ message: "Invalid URL" });
+//       }
+//     } catch (error) {
+//       return res.status(400).json({ message: error.message });
+//     }
+// });
 
 module.exports = router;

@@ -1,0 +1,61 @@
+version: '3.8'
+
+# Services
+services:
+  # Server service
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+      
+    container_name: serverPart
+    ports:
+      - "5000:5000"
+    env_file: ./server/.env
+    environment:
+      - MONGO_Vikki=MONGO_Vikki
+      - SECRET=SECRET
+      - JWT_KEY=JWT_KEY
+      - STRIPE_SKEY=STRIPE_SKEY
+      - EMAIL=EMAIL
+      - PASSWORD=PASSWORD
+      - RESET_PASSWORD_KEY=RESET_PASSWORD_KEY
+
+  # Client service
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+
+    container_name: frontend
+    ports:
+      - "3000:3000"
+    env_file: ./client/.env
+    environment:
+      - REACT_APP_SERVICE_ID=REACT_APP_SERVICE_ID
+      - REACT_APP_TEMPLATE_ID=REACT_APP_TEMPLATE_ID
+      - REACT_APP_PUBLIC_KEY=REACT_APP_PUBLIC_KEY
+      - REACT_APP_BASE_URL=REACT_APP_BASE_URL
+      - REACT_APP_KEY=REACT_APP_KEY
+    depends_on:
+      - server
+
+  admin:
+    build:
+      context: ./admin
+      dockerfile: Dockerfile
+
+    container_name: admin
+    ports:
+      - "3001:3000"
+    env_file: ./admin/.env
+    environment:
+      - REACT_APP_BASE_URL=REACT_APP_BASE_URL
+      - REACT_APP_apiKey=REACT_APP_apiKey
+      - REACT_APP_authDomain=REACT_APP_authDomain
+      - REACT_APP_projectIdL=REACT_APP_projectId
+      - REACT_APP_storageBucket=REACT_APP_storageBucket
+      - REACT_APP_messagingSenderId=REACT_APP_messagingSenderId
+      - REACT_APP_appId=REACT_APP_appId
+    depends_on:
+      - server

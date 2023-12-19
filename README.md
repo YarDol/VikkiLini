@@ -29,7 +29,9 @@ It's a full-stack e-commerce clothing store. Developed as a college graduation p
 - Stripe
 - NodeMailer
 - i18Next
-
-
+- Docker
+ 
+ ### Links
+ 
 - https://vikkilini.netlify.app
 - https://vikkilini-admin.netlify.app

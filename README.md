@@ -6,7 +6,7 @@ It's a full-stack e-commerce clothing store. Developed as a college graduation p
 
 ## Features 💡
 
-# Client
+### Client
 - Sign Up/Sign In users, creating user personal page
 - View available products
 - Adding a product to the bag
@@ -17,7 +17,7 @@ It's a full-stack e-commerce clothing store. Developed as a college graduation p
 - Refusal/confirmation of items (View order status)
 - UA/EN localization
 
-# Admin
+### Admin
 - Creating an admin user
 - Add/edit a product
 - Change status of the order
@@ -31,5 +31,5 @@ It's a full-stack e-commerce clothing store. Developed as a college graduation p
 - i18Next
 
 
-https://vikkilini.netlify.app/
-https://vikkilini-admin.netlify.app
+- https://vikkilini.netlify.app
+- https://vikkilini-admin.netlify.app

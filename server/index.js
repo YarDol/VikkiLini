@@ -19,8 +19,6 @@ mongoos
     console.log(err);
   });
 
-console.log(process.env);
-
 app.use(cors());
 app.use(express.json());
 app.use("/api/auth", authRoute);

@@ -13,6 +13,7 @@ const Home = () => {
   const location = useLocation();
   const path = location.pathname;
   const { t } = useTranslation();
+  //
 
   return (
     <div>

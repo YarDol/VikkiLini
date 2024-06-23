@@ -17,7 +17,7 @@ jobs:
           heroku_email: ${{secrets.HEROKU_APP_EMAIL}}
           appdir: "server"
           usedocker: true
-         env:
+        env:
           MONGO_Vikki: ${{secrets.MONGO_Vikki}}
           SECRET: ${{secrets.SECRET}}
           JWT_KEY: ${{secrets.JWT_KEY}}

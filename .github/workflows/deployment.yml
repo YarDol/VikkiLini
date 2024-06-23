@@ -15,7 +15,7 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
           heroku_email: ${{secrets.HEROKU_APP_EMAIL}}
-          appdir: "server"
+          appdir: "client"
           usedocker: true
         env:
           HD_MONGO_Vikki: ${{secrets.MONGO_VIKKI}}

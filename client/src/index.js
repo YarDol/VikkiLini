@@ -35,8 +35,6 @@ i18n
 
 const root = createRoot(document.getElementById("root"));
 
-console.log(process.env);
-
 root.render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>

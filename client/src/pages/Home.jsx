@@ -11,15 +11,16 @@ import { useTranslation } from "react-i18next";
 
 const Home = () => {
   const location = useLocation();
-  const path = location.pathname; 
-  const {t} = useTranslation();
+  const path = location.pathname;
+  const { t } = useTranslation();
+
   return (
     <div>
       <Promotion />
       <Navbar />
-      <Carousel /> 
+      <Carousel />
       <Categories />
-      <PopularProducts path={path} description={t('hot')} />
+      <PopularProducts path={path} description={t("hot")} />
       <Newsletter />
       <Footer />
     </div>

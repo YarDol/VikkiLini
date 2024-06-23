@@ -18,10 +18,10 @@ jobs:
           appdir: "server"
           usedocker: true
         env:
-          MONGO_Vikki: ${{secrets.MONGO_VIKKI}}
-          SECRET: ${{secrets.SECRET}}
-          JWT_KEY: ${{secrets.JWT_KEY}}
-          STRIPE_SKEY: ${{secrets.STRIPE_SKEY}}
-          EMAIL: ${{secrets.EMAIL}}
-          PASSWORD: ${{secrets.PASSWORD}}
-          RESET_PASSWORD_KEY: ${{secrets.RESET_PASSWORD_KEY}}
+          HD_MONGO_Vikki: ${{secrets.MONGO_VIKKI}}
+          HD_SECRET: ${{secrets.SECRET}}
+          HD_JWT_KEY: ${{secrets.JWT_KEY}}
+          HD_STRIPE_SKEY: ${{secrets.STRIPE_SKEY}}
+          HD_EMAIL: ${{secrets.EMAIL}}
+          HD_PASSWORD: ${{secrets.PASSWORD}}
+          HD_RESET_PASSWORD_KEY: ${{secrets.RESET_PASSWORD_KEY}}

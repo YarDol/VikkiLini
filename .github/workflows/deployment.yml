@@ -18,7 +18,7 @@ jobs:
           appdir: "server"
           usedocker: true
         env:
-          MONGO_VIKKI: ${{secrets.MONGO_VIKKI}}
+          MONGO_Vikki: ${{secrets.MONGO_VIKKI}}
           SECRET: ${{secrets.SECRET}}
           JWT_KEY: ${{secrets.JWT_KEY}}
           STRIPE_SKEY: ${{secrets.STRIPE_SKEY}}

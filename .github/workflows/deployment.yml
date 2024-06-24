@@ -25,3 +25,8 @@ jobs:
           HD_EMAIL: ${{secrets.EMAIL}}
           HD_PASSWORD: ${{secrets.PASSWORD}}
           HD_RESET_PASSWORD_KEY: ${{secrets.RESET_PASSWORD_KEY}}
+          HD_REACT_APP_BASE_URL: ${{secrets.REACT_APP_BASE_URL}}
+          HD_REACT_APP_KEY: ${{secrets.REACT_APP_KEY}}
+          HD_REACT_APP_PUBLIC_KEY: ${{secrets.REACT_APP_PUBLIC_KEY}}
+          HD_REACT_APP_SERVICE_ID: ${{secrets.REACT_APP_SERVICE_ID}}
+          REACT_APP_TEMPLATE_ID: ${{secrets.REACT_APP_TEMPLATE_ID}}
